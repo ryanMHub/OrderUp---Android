@@ -1,81 +1,77 @@
 package com.practice.practiceorderup01;
 
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.view.View;
+import android.widget.*;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    //declare DBHelper object
+
+    private Spinner spinnerOrderGuides;
+    private Button selectTableButton;
+    private TextView addOrderGuide;
+
     private DBHelper dbConnection;
+    private String tableName = "";
 
-    //declare the XML tags
-    private RecyclerView orderListRec;
-    private Button processListButton;
-
-    //used as a flag for current recycler adapter that is displayed
-    boolean isResults = false;
-
-    //stores the current table that is being used in the order list
-    String currentTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //create connection to embedded database, And initialize the value for the current Table that is being used
+        //create a connection to the database with this activity
         dbConnection = new DBHelper(this);
-        currentTable =DBHelper.ORDER_TABLE;
 
-        //initialize XML Tags
-        orderListRec = findViewById(R.id.orderListRec);
-        processListButton = findViewById(R.id.submitOrderButton);
+        //links to the spinner on activity_main that displays the tablenames in the orderGuide database
+        spinnerOrderGuides = findViewById(R.id.spinnerOrderGuides);
+        //links to the button that will pass the tablename to the OrderListActivity
+        selectTableButton = findViewById(R.id.selectTableButton);
+        //links the textview that will pass user to the add orderGuide activity
+        addOrderGuide = findViewById(R.id.txtAddOrderGuide);
 
-        ArrayList<Item> items = dbConnection.getItemList(currentTable);
 
-        //Declare and initialize adapters for recycler view
-        OrderListRecAdapter adapter = new OrderListRecAdapter();
-        adapter.setItemsList(items);
-        OrderResultsRecAdapter resultsAdapter = new OrderResultsRecAdapter();
-        resultsAdapter.setItemsList(items);
+        ArrayList<String> orderGuides = dbConnection.getTableNames();
 
-        //set order_list_item.XML adapter to the recyclerView
-        orderListRec.setAdapter(adapter);
-        orderListRec.setLayoutManager(new GridLayoutManager(this,1));
+        ArrayAdapter<String> tableNameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, orderGuides);
+        tableNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerOrderGuides.setAdapter(tableNameAdapter);
 
-        //On button click for main button
-        processListButton.setOnClickListener(new View.OnClickListener() {
+        //action taken when you select a value in the spinner
+        spinnerOrderGuides.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                //the if isResult is used as a flag wether the order list adapter
-                //or order results adapter
-                if(isResults){
-                    showOrder(adapter);
-                }else{
-                    showResults(resultsAdapter);
-                }
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(MainActivity.this, "The selected table is " + orderGuides.get(position), Toast.LENGTH_SHORT).show();
+                tableName = orderGuides.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
-    }
 
-    //order results switch method
-    public void showResults(OrderResultsRecAdapter resultsAdapter){
-        orderListRec.setAdapter(resultsAdapter);
-        processListButton.setText(R.string.mainMenuButton);
-        isResults = true;
-    }
+        selectTableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, OrderListActivity.class);
+                Toast.makeText(MainActivity.this, "Table Name " + tableName, Toast.LENGTH_SHORT).show();
+                intent.putExtra("tableName", tableName);
+                startActivity(intent);
+            }
+        });
 
-    //show order guide switch method
-    public void showOrder(OrderListRecAdapter adapter){
-        orderListRec.setAdapter(adapter);
-        processListButton.setText(R.string.processButton);
-        isResults = false;
+        addOrderGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddOrderGuideActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }

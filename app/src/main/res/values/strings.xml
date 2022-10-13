@@ -2,4 +2,13 @@
     <string name="app_name">PracticeOrderUp01</string>
     <string name="processButton">Process Order</string>
     <string name="mainMenuButton">Main Menu</string>
+    <string name="orderGuideSelectionLabel">Select the Order Guide</string>
+    <string name="addNewOrderGuide">*Add New Order Guide*</string>
+    <string name="selectTableButton">Select Table</string>
+    <string name="addOrderGuideLabel">Create an Order Guide</string>
+    <string name="addNewItem">Add Item</string>
+    <string name="createOrderGuide">Create List</string>
+    <string name="orderGuideName">Order Guide Name</string>
+    <string name="itemNameLabel">Item Name</string>
+    <string name="itemParLabel">Item Par Level</string>
 </resources>

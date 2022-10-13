@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <EditText android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="50dp"
+              android:hint="item name"
+              android:id="@+id/edtItemName"
+              android:gravity="left"/>
+
+    <EditText android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:hint="0"
+              android:id="@+id/edtParLevel"
+              android:gravity="right" android:layout_alignParentEnd="true" android:layout_alignParentTop="true"
+              android:layout_marginEnd="93dp"/>
+
+
+</RelativeLayout>
