@@ -22,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, "orderGuide.db", null, 1);
         //when the database helper class is constructed if the test db does not exist in
         //the database create it
-        if(!(tableExists(this.getReadableDatabase(),ORDER_TABLE))){
+        if(!(tableExists(ORDER_TABLE))){
             buildTestTable();
         }
     }
@@ -72,7 +72,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean createOrderGuideTable(String tableName){
 
         //if the table already exists return false
-        if(tableExists(this.getReadableDatabase(), tableName)){
+        if(tableExists(tableName)){
             return false;
         } else{
             String createTableStatement = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ITEM_NAME + " TEXT, " + ITEM_PAR + " REAL)";
@@ -131,7 +131,10 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //checks if a table exists in the database
-    public boolean tableExists(SQLiteDatabase db, String tableName){
+    public boolean tableExists(String tableName){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
         if(tableName == null || db == null || !db.isOpen()){
             return false;
         }
@@ -147,7 +150,32 @@ public class DBHelper extends SQLiteOpenHelper {
 
         int count = cursor.getInt(0);
         cursor.close();
+        db.close();
         return (count > 0);
+    }
+
+    //this method will drop the table that is passed to it
+    public void dropTable(String tableName){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String statement = "DROP TABLE IF EXISTS " + tableName;
+
+        db.execSQL(statement);
+        db.execSQL("COMMIT");
+        db.close();
+
+    }
+
+    //commit changes to database
+    public void commitDataChanges(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String statement = "COMMIT";
+
+        db.execSQL(statement);
+        db.close();
     }
 
     //Todo: check if item exists method

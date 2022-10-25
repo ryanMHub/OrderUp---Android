@@ -58,6 +58,7 @@ public class AddOrderGuideActivity extends AppCompatActivity {
         });
 
         //Todo: create error checking with toasts if data is not entered properly
+        //Todo: error checking if someone enters a nomnnumerical character currently crashes activity
         btnCreateList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +69,10 @@ public class AddOrderGuideActivity extends AppCompatActivity {
                 for(Item item : newItemList){
                     dbConnection.onAdd(item, edtTableName.getText().toString());
                 }
+
+                dbConnection.commitDataChanges();
+
+                finish();
             }
         });
 

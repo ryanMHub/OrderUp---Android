@@ -57,7 +57,7 @@ public class OrderListActivity extends AppCompatActivity {
                 //the if isResult is used as a flag wether the order list adapter
                 //or order results adapter
                 if(isResults){
-                    showOrder(adapter);
+                    finish();
                 }else{
                     showResults(resultsAdapter);
                 }
@@ -70,12 +70,5 @@ public class OrderListActivity extends AppCompatActivity {
         orderListRec.setAdapter(resultsAdapter);
         processListButton.setText(R.string.mainMenuButton);
         isResults = true;
-    }
-
-    //show order guide switch method
-    public void showOrder(OrderListRecAdapter adapter){
-        orderListRec.setAdapter(adapter);
-        processListButton.setText(R.string.processButton);
-        isResults = false;
     }
 }

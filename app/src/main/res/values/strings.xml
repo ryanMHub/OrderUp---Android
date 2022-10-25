@@ -1,14 +1,35 @@
 <resources>
     <string name="app_name">PracticeOrderUp01</string>
+
+
+    <!-- spinner labels -->
+    <string name="orderGuideSelectionLabel">Select the Order Guide</string>
+    <string name="actionOptionLabel">Select Action Option</string>
+
+    <!-- buttons -->
+    <string name="createActionBtn">Create Action</string>
+    <string name="deleteBtn">Delete</string>
+    <string name="cancelBtn">Cancel</string>
     <string name="processButton">Process Order</string>
     <string name="mainMenuButton">Main Menu</string>
-    <string name="orderGuideSelectionLabel">Select the Order Guide</string>
+
+
     <string name="addNewOrderGuide">*Add New Order Guide*</string>
     <string name="selectTableButton">Select Table</string>
     <string name="addOrderGuideLabel">Create an Order Guide</string>
     <string name="addNewItem">Add Item</string>
     <string name="createOrderGuide">Create List</string>
     <string name="orderGuideName">Order Guide Name</string>
+
     <string name="itemNameLabel">Item Name</string>
     <string name="itemParLabel">Item Par Level</string>
+
+    <!--Delete order guide activity strings-->
+    <string name="checkDeleteMsg">Are you sure you would like to delete this order guide?</string>
+
+    <string-array name="actionOptions">
+        <item>Process Order Guide</item>
+        <item>Edit Order Guide</item>
+        <item>Delete Order Guide</item>
+    </string-array>
 </resources>

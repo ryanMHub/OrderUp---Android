@@ -9,18 +9,20 @@
               android:gravity="center"
               tools:context=".MainActivity">
 
-    <LinearLayout android:layout_width="wrap_content"
+    <!-- This layout will contain the spinner to select the table or order guide user would to use-->
+    <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:orientation="vertical">
+                  android:orientation="vertical"
+                  android:layout_marginHorizontal="20dp">
 
-        <TextView android:layout_width="wrap_content"
+        <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:text="@string/orderGuideSelectionLabel"
                   android:id="@+id/txtMainSpinnerLabel"
                   android:textSize="20dp"
                   android:textStyle="bold"/>
 
-        <Spinner android:layout_width="wrap_content"
+        <Spinner android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:layout_weight="1"
                  android:textAlignment="center"
@@ -28,13 +30,37 @@
 
     </LinearLayout>
 
+    <!-- Spinner allows user to select the action to take on the choosen table -->
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                    android:layout_marginHorizontal="20dp">
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="@string/actionOptionLabel"
+                  android:id="@+id/txtOptionLabel"
+                  android:textSize="20dp"
+                  android:textStyle="bold"/>
+
+        <Spinner android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:textAlignment="center"
+                 android:id="@+id/spinnerActionOption"/>
+
+    </LinearLayout>
+
+    <!-- Button creates the action to the selected table -->
     <Button android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/selectTableButton"
-            android:text="@string/selectTableButton"/>
+            android:text="@string/createActionBtn"/>
 
+    <!-- Textview is linked to the create table action activity -->
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_marginTop="30dp"
               android:text="@string/addNewOrderGuide"
                 android:id="@+id/txtAddOrderGuide"
                 android:textColor="@color/red"
