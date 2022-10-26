@@ -114,8 +114,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intentProcessOrder);
                         break;
 
-                    case 1: //Add edit option
-                        Toast.makeText(MainActivity.this, actionOption + " was selected", Toast.LENGTH_SHORT).show();
+                    case 1: //this case will access the edit order guide activity
+                        Intent intentEditOrderGuide= new Intent(MainActivity.this, EditOrderGuideActivity.class);
+                        intentEditOrderGuide.putExtra("tableName", tableName);
+                        startActivity(intentEditOrderGuide);
                         break;
 
                     case 2: //this case will access the delete order guide activity

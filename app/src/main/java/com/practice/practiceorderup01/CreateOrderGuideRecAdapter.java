@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class CreateOrderGuideRecAdapter extends RecyclerView.Adapter<CreateOrderGuideRecAdapter.ViewHolder> {
 
     //This array will store the array of the new order guide items
-    ArrayList<Item> newItemList = new ArrayList<>();
+    ArrayList<Item> newItemList;
 
     @NonNull
     @NotNull
@@ -42,6 +42,7 @@ public class CreateOrderGuideRecAdapter extends RecyclerView.Adapter<CreateOrder
         notifyDataSetChanged(); //refresh the recycler with the new list of items
     }
 
+    //Links all the create_list_rec.xml
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         //declare all tags in the create_list_rec XML

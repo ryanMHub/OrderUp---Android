@@ -38,6 +38,7 @@ public class AddOrderGuideActivity extends AppCompatActivity {
         //initialize the database helper
         dbConnection = new DBHelper(this);
 
+        //Todo: move to global
         //arraylist will store a list of all the items in the new order guide
         ArrayList<Item> newItemList = new ArrayList<>();
 
@@ -49,6 +50,9 @@ public class AddOrderGuideActivity extends AppCompatActivity {
         newListRec.setAdapter(adapter);
         newListRec.setLayoutManager(new GridLayoutManager(this,1));
 
+        //Todo: Add items that are not used do not include in table currently databases has error when left empty
+        //Todo: Duplicate items creates creation of database error
+        //Todo: also when space added to name causes error
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +74,7 @@ public class AddOrderGuideActivity extends AppCompatActivity {
                     dbConnection.onAdd(item, edtTableName.getText().toString());
                 }
 
-                dbConnection.commitDataChanges();
+                //dbConnection.commitDataChanges();
 
                 finish();
             }

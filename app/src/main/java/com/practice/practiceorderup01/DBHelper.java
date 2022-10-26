@@ -162,7 +162,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String statement = "DROP TABLE IF EXISTS " + tableName;
 
         db.execSQL(statement);
-        db.execSQL("COMMIT");
+        //db.execSQL("COMMIT");
         db.close();
 
     }

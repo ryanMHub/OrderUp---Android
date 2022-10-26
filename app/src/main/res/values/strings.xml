@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PracticeOrderUp01</string>
+    <string name="app_name">Order Up</string>
 
 
     <!-- spinner labels -->
@@ -7,26 +7,31 @@
     <string name="actionOptionLabel">Select Action Option</string>
 
     <!-- buttons -->
+    <string name="addNewOrderGuide">*Add New Order Guide*</string>
     <string name="createActionBtn">Create Action</string>
     <string name="deleteBtn">Delete</string>
     <string name="cancelBtn">Cancel</string>
     <string name="processButton">Process Order</string>
     <string name="mainMenuButton">Main Menu</string>
-
-
-    <string name="addNewOrderGuide">*Add New Order Guide*</string>
-    <string name="selectTableButton">Select Table</string>
-    <string name="addOrderGuideLabel">Create an Order Guide</string>
-    <string name="addNewItem">Add Item</string>
     <string name="createOrderGuide">Create List</string>
-    <string name="orderGuideName">Order Guide Name</string>
+    <string name="selectTableButton">Select Table</string>
+    <string name="addNewItem">Add Item</string>
+    <string name="saveOrderGuide">Save Changes</string>
 
+    <!-- Header Labels -->
+    <string name="editOrderGuideHeader">Edit Order Guide</string>
+    <string name="addOrderGuideLabel">Create an Order Guide</string>
+
+    <!-- labels -->
     <string name="itemNameLabel">Item Name</string>
     <string name="itemParLabel">Item Par Level</string>
+    <string name="deleteItemLabel">Delete</string>
+    <string name="orderGuideName">Order Guide Name</string>
 
     <!--Delete order guide activity strings-->
     <string name="checkDeleteMsg">Are you sure you would like to delete this order guide?</string>
 
+    <!-- String arrays -->
     <string-array name="actionOptions">
         <item>Process Order Guide</item>
         <item>Edit Order Guide</item>

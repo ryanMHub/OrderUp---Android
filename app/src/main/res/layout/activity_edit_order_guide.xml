@@ -5,24 +5,23 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
-        tools:context=".AddOrderGuideActivity">
+        tools:context=".EditOrderGuideActivity">
 
-    <!-- layout container for the Main label and Order Guide name edittext tag-->
+    <!-- layout container for the Main label and Order Guide name edittext tag Also contains buttons and column labels-->
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="0dp"
-                  android:id="@+id/layoutLabels"
+                  android:id="@+id/layoutLabelsEdit"
                   android:orientation="vertical"
                   android:layout_marginTop="5dp"
                   android:gravity="top"
                   app:layout_constraintHeight_percent="0.25"
-                  app:layout_constraintBottom_toTopOf="@id/layoutRec"
+                  app:layout_constraintBottom_toTopOf="@id/layoutRecEdit"
                   app:layout_constraintStart_toStartOf="parent"
                   app:layout_constraintTop_toTopOf="parent">
 
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="@string/addOrderGuideLabel"
+                  android:text="@string/editOrderGuideHeader"
                   android:textSize="25dp"
                   android:layout_marginTop="5dp"
                   android:textStyle="bold"
@@ -30,8 +29,8 @@
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
+                      android:id="@+id/layoutGuideNameEdit"
                       android:orientation="horizontal"
-                      android:id="@+id/layoutGuideName"
                       android:gravity="center">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -39,10 +38,9 @@
                       android:text="@string/orderGuideName"/>
             <EditText android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:layout_marginStart="15dp"
-                      android:hint="Wine List"
-                      android:layout_gravity="center"
-                      android:id="@+id/edtTableName"/>
+                      android:layout_marginLeft="15dp"
+                      android:gravity="center"
+                      android:id="@+id/edtOrderGuideNameEdit"/>
 
         </LinearLayout>
 
@@ -50,23 +48,29 @@
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="horizontal"
-                      android:id="@+id/layoutButtons"
+                      android:id="@+id/layoutButtonsEdit"
                       android:gravity="center"
                       android:layout_marginTop="5dp"
-                      app:layout_constraintTop_toBottomOf="@id/layoutGuideName"
-                      app:layout_constraintBottom_toTopOf="@id/layoutColLabels"
+                      app:layout_constraintTop_toBottomOf="@id/layoutGuideNameEdit"
+                      app:layout_constraintBottom_toTopOf="@id/layoutColLabelsEdit"
                       app:layout_constraintEnd_toEndOf="parent">
             <Button android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:text="@string/addNewItem"
-                    android:id="@+id/btnAddItem"
+                    android:id="@+id/btnAddItemEdit"
                     android:layout_gravity="center"/>
             <Button android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="@string/createOrderGuide"
-                    android:id="@+id/btnCreateList"
+                    android:text="@string/saveOrderGuide"
+                    android:id="@+id/btnSaveOrderGuideEdit"
+                    android:layout_gravity="center"/>
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/cancelBtn"
+                    android:id="@+id/btnCancelEdit"
                     android:layout_gravity="center"/>
         </LinearLayout>
 
@@ -75,20 +79,24 @@
                       android:layout_height="wrap_content"
                       android:orientation="horizontal"
                       android:layout_marginTop="5dp"
-                      app:layout_constraintTop_toBottomOf="@id/layoutButtons"
-                      app:layout_constraintBottom_toTopOf="@id/layoutRec"
-                      android:id="@+id/layoutColLabels"
+                      app:layout_constraintTop_toBottomOf="@id/layoutButtonsEdit"
+                      app:layout_constraintBottom_toTopOf="@id/layoutRecEdit"
+                      android:id="@+id/layoutColLabelsEdit"
                       android:gravity="left">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textStyle="bold"
-                      android:layout_marginLeft="20dp"
-                      android:layout_marginRight="15dp"
+                      android:layout_marginStart="15dp"
+                      android:text="@string/deleteItemLabel"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textStyle="bold"
+                      android:layout_marginStart="30dp"
                       android:text="@string/itemNameLabel"/>
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textStyle="bold"
-                      android:layout_marginLeft="100dp"
+                      android:layout_marginStart="150dp"
                       android:text="@string/itemParLabel"/>
 
         </LinearLayout>
@@ -101,16 +109,15 @@
                                            android:gravity="center"
                                            android:layout_marginTop="0dp"
                                            app:layout_constraintHeight_percent=".7"
-                                           android:id="@+id/layoutRec"
+                                           android:id="@+id/layoutRecEdit"
                                            android:layout_centerHorizontal="true"
-                                           app:layout_constraintTop_toBottomOf="@id/layoutLabels"
+                                           app:layout_constraintTop_toBottomOf="@id/layoutLabelsEdit"
                                            app:layout_constraintBottom_toBottomOf="parent"
                                            app:layout_constraintVertical_chainStyle="packed">
         <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    app:layout_constrainedHeight="true"
-                                                   android:id="@+id/newListRec"/>
+                                                   android:id="@+id/editListRec"/>
     </androidx.core.widget.NestedScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
