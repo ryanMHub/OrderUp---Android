@@ -1,5 +1,6 @@
 package com.practice.practiceorderup01;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,18 +83,19 @@ public class EditOrderGuideActivity extends AppCompatActivity {
                     dbConnection.onAdd(item, edtOrderGuideName.getText().toString());
                 }
 
-                //commit changes to the database
-                dbConnection.commitDataChanges();
-
                 //return to main activity
+                Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
 
-        //action taken when cancel button is pressed
+        //action taken when cancel button is pressed return to main activity
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });

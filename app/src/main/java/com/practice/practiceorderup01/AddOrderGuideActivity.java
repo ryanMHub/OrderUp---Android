@@ -1,5 +1,6 @@
 package com.practice.practiceorderup01;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ public class AddOrderGuideActivity extends AppCompatActivity {
 
     private Button btnAddItem; //declares connection to the tag that will add a new item to the list
     private Button btnCreateList; //declares connection to the tag that will create the new orderGuide in the database
+    private Button btnCancelCreate; //declares connection to the tag that will be used to cancel create an order guide activity
 
     private DBHelper dbConnection; //used to access the DB to create the order guide
 
@@ -34,6 +36,7 @@ public class AddOrderGuideActivity extends AppCompatActivity {
         newListRec = findViewById(R.id.newListRec);
         btnAddItem = findViewById(R.id.btnAddItem);
         btnCreateList = findViewById(R.id.btnCreateList);
+        btnCancelCreate = findViewById(R.id.btnCancelCreate);
 
         //initialize the database helper
         dbConnection = new DBHelper(this);
@@ -74,8 +77,18 @@ public class AddOrderGuideActivity extends AppCompatActivity {
                     dbConnection.onAdd(item, edtTableName.getText().toString());
                 }
 
-                //dbConnection.commitDataChanges();
+                Intent intent = new Intent(AddOrderGuideActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
+        //cancel the current activity and go back to main activity
+        btnCancelCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddOrderGuideActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });

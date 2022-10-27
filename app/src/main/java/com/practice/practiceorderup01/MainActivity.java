@@ -112,18 +112,21 @@ public class MainActivity extends AppCompatActivity {
                         Intent intentProcessOrder = new Intent(MainActivity.this, OrderListActivity.class);
                         intentProcessOrder.putExtra("tableName", tableName);
                         startActivity(intentProcessOrder);
+                        finish();
                         break;
 
                     case 1: //this case will access the edit order guide activity
                         Intent intentEditOrderGuide= new Intent(MainActivity.this, EditOrderGuideActivity.class);
                         intentEditOrderGuide.putExtra("tableName", tableName);
                         startActivity(intentEditOrderGuide);
+                        finish();
                         break;
 
                     case 2: //this case will access the delete order guide activity
                         Intent intentDeleteOrderGuide= new Intent(MainActivity.this, DeleteOrderGuideActivity.class);
                         intentDeleteOrderGuide.putExtra("tableName", tableName);
                         startActivity(intentDeleteOrderGuide);
+                        finish();
                         break;
 
                     default:
@@ -137,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddOrderGuideActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -149,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
         orderGuides = dbConnection.getTableNames();
         tableNameAdapter.notifyDataSetChanged();
         spinnerOrderGuides.setAdapter(tableNameAdapter);
+
     }
 
     //tODO: restart or resume which one should handle this action

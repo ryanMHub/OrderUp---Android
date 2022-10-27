@@ -1,5 +1,6 @@
 package com.practice.practiceorderup01;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,6 +58,8 @@ public class OrderListActivity extends AppCompatActivity {
                 //the if isResult is used as a flag wether the order list adapter
                 //or order results adapter
                 if(isResults){
+                    Intent intent = new Intent(OrderListActivity.this, MainActivity.class);
+                    startActivity(intent);
                     finish();
                 }else{
                     showResults(resultsAdapter);

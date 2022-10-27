@@ -1,5 +1,6 @@
 package com.practice.practiceorderup01;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -47,14 +48,18 @@ public class DeleteOrderGuideActivity extends AppCompatActivity {
             public void onClick(View view) {
                 dbConnection.dropTable(currentTable);
                 Toast.makeText(DeleteOrderGuideActivity.this, currentTable + " Has Been Delete", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DeleteOrderGuideActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
 
-        //cancel the delete and return to previous activity
+        //cancel the delete and return to main activity
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(DeleteOrderGuideActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         });

@@ -68,6 +68,12 @@
                     android:text="@string/createOrderGuide"
                     android:id="@+id/btnCreateList"
                     android:layout_gravity="center"/>
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="@string/cancelBtn"
+                    android:id="@+id/btnCancelCreate"/>
+
         </LinearLayout>
 
         <!--Layout for column labels-->
