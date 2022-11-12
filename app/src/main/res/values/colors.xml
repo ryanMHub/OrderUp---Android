@@ -8,4 +8,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="lightBlueAccent">#668CD6</color>
+    <color name="lightBlueAccentDark">#3C70D5</color>
+    <color name="lightBlueAccentLight">#94A2BC</color>
+    <color name="beigeAccent">#D6B666</color>
+    <color name="beigeAccentDark">#D5A93D</color>
+    <color name="beigeAccentLight">#CFC19C</color>
+    <color name="redGrayAccent">#D84E7D</color>
+    <color name="redGrayAccentDark">#57021F</color>
+    <color name="redGrayAccentLight">#CAC2C5</color>
+    <color name="yellow">#FFE500</color>
+
 </resources>

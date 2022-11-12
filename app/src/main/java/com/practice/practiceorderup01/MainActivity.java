@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,13 +16,14 @@ public class MainActivity extends AppCompatActivity {
 
     //declare spinners
     private Spinner spinnerOrderGuides;
-    private Spinner spinnerActionOption;
 
+    //Todo: Clean up code when finished replacing
+    //All the comments below have been replaced by buttons
+    //private Spinner spinnerActionOption;
     //declare button
-    private Button selectActionButton;
-
+    //private Button selectActionButton;
     //declare textviews
-    private TextView addOrderGuide;
+    //private TextView addOrderGuide;
 
     //Declare the database connection
     private DBHelper dbConnection;
@@ -34,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
     //Array adapter for the order guides array
     private ArrayAdapter<String> tableNameAdapter;
 
+    //declare buttons from activity_main.xml
+    private Button createOrderBtn;
+    private Button viewOrderBtn;
+    private Button processOrderBtn;
+    private Button editOrderBtn;
+    private Button deleteOrderBtn;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +56,14 @@ public class MainActivity extends AppCompatActivity {
 
         //links to the spinner on activity_main that displays the tablenames in the orderGuide database
         spinnerOrderGuides = findViewById(R.id.spinnerOrderGuides);
+
+        //Todo: clean up replaced by buttons final
         //links to the spinner on the activity_main that displays the action options to perform on the selected table
-        spinnerActionOption = findViewById(R.id.spinnerActionOption);
+        //spinnerActionOption = findViewById(R.id.spinnerActionOption);
         //links to the button that will pass the tablename to the OrderListActivity
-        selectActionButton = findViewById(R.id.selectTableButton);
+        //selectActionButton = findViewById(R.id.selectTableButton);
         //links the textview that will pass user to the add orderGuide activity
-        addOrderGuide = findViewById(R.id.txtAddOrderGuide);
+        //addOrderGuide = findViewById(R.id.txtAddOrderGuide);
 
         //Arraylist contains the table names to be used in the orderGuide spinner in activity_main.xml
         //and adapt the arraylist to the spinner in the display
@@ -73,16 +86,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Todo: Remove when done changing to buttons
         //Arraylist is create to store the action options that will be adapted to the actionOptions spinner on the activity_main.xml
-        Resources res = getResources();
-        ArrayList<String> actionOptions = new ArrayList<>(Arrays.asList(res.getStringArray(R.array.actionOptions)));
+        //Resources res = getResources();
+        //ArrayList<String> actionOptions = new ArrayList<>(Arrays.asList(res.getStringArray(R.array.actionOptions)));
         //create the adapter for the above list
-        ArrayAdapter<String> actionOptionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, actionOptions);
-        actionOptionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerActionOption.setAdapter(actionOptionAdapter);
-
+        //ArrayAdapter<String> actionOptionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, actionOptions);
+        //actionOptionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //spinnerActionOption.setAdapter(actionOptionAdapter);
         //action taken when the action option is changed
-        spinnerActionOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*spinnerActionOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 //Toast.makeText(MainActivity.this, "The selected option is " + actionOptions.get(position), Toast.LENGTH_SHORT).show();
@@ -93,9 +106,69 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+        });*/
+
+        //initialize all buttons from the main_activity.xml
+        createOrderBtn = findViewById(R.id.createOrderButton);
+        viewOrderBtn = findViewById(R.id.viewOrderButton);
+        processOrderBtn = findViewById(R.id.processOrderButton);
+        editOrderBtn = findViewById(R.id.editOrderButton);
+        deleteOrderBtn = findViewById(R.id.deleteOrderButton);
+
+        //Create Order Guide button will execute AddOrderGuideActivity
+        createOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddOrderGuideActivity.class);
+                startActivity(intent);
+                finish();
+            }
         });
 
-        selectActionButton.setOnClickListener(new View.OnClickListener() {
+        //Todo: add the view order guide activity
+        //View Order Guide executes ViewOrderGuideActivity
+        viewOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Add intent for View Activity
+            }
+        });
+
+        //Todo: Do I need to add a fail safe if no table is selected ? Automatically have a table selected
+        //Process Order Button will execute OrderListActivity
+        processOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentProcessOrder = new Intent(MainActivity.this, OrderListActivity.class);
+                intentProcessOrder.putExtra("tableName", tableName);
+                startActivity(intentProcessOrder);
+                finish();
+            }
+        });
+
+        //Edit Order Button executes EditOrderGuideActivity
+        editOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentEditOrderGuide= new Intent(MainActivity.this, EditOrderGuideActivity.class);
+                intentEditOrderGuide.putExtra("tableName", tableName);
+                startActivity(intentEditOrderGuide);
+                finish();
+            }
+        });
+
+        //Delete Order Guide Button executes DeleteOrderGuideActivity
+        deleteOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentDeleteOrderGuide= new Intent(MainActivity.this, DeleteOrderGuideActivity.class);
+                intentDeleteOrderGuide.putExtra("tableName", tableName);
+                startActivity(intentDeleteOrderGuide);
+                finish();
+            }
+        });
+    //Todo: remove when button replacement complete
+   /*     selectActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -134,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         addOrderGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,11 +214,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        });
+        });*/
 
 
     }
 
+    //Todo:Fix the back button
+    //Todo: Do I need this.
     @Override
     protected void onRestart(){
         super.onRestart();
