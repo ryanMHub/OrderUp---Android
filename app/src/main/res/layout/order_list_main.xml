@@ -8,7 +8,7 @@
         tools:context=".OrderListActivity"
         >
 
-    <!--Adding header for top of the dashboard screen-->
+    <!--Adding header image for top of the dashboard screen-->
     <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,6 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:shapeAppearanceOverlay="@style/SpecificCornerRounded"/>
 
+    <!--Button to process order or return to main menu-->
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

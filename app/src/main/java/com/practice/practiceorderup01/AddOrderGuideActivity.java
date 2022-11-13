@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class AddOrderGuideActivity extends AppCompatActivity {
     //Todo: Add delete item to Create Order guide
+    //Todo: send a toast when creation is complete
     //Todo: When you click create the activity closes and does not open Main Activity ? Happened when I added a large amount of items or maybe a space in the name
     //declares the connection to the OrderGuide name editText tag
     private EditText edtTableName;

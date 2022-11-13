@@ -7,6 +7,17 @@
         android:layout_height="match_parent"
         tools:context=".EditOrderGuideActivity">
 
+    <!-- Header image -->
+    <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editHeaderImage"
+            android:src="@drawable/deleteheader01"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:shapeAppearanceOverlay="@style/SpecificCornerRounded"/>
+
     <!-- layout container for the Main label and Order Guide name edittext tag Also contains buttons and column labels-->
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="0dp"

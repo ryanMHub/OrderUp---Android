@@ -9,7 +9,7 @@
     <!-- buttons -->
     <string name="addNewOrderGuide">*Add New Order Guide*</string>
     <string name="createActionBtn">Create Action</string>
-    <string name="deleteBtn">Delete</string>
+    <string name="deleteBtn">Confirm</string>
     <string name="cancelBtn">Cancel</string>
     <string name="processButton">Process Order</string>
     <string name="mainMenuButton">Main Menu</string>
