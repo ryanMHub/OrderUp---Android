@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
-
+    //Todo:Enhance the spinner design
     //declare spinners
     private Spinner spinnerOrderGuides;
 

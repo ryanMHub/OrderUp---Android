@@ -3,6 +3,7 @@ package com.practice.practiceorderup01;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -15,6 +16,7 @@ public class OrderListActivity extends AppCompatActivity {
     private DBHelper dbConnection;
 
     //declare the XML tags
+    private TextView qtyLabel;
     private RecyclerView orderListRec;
     private Button processListButton;
 
@@ -38,7 +40,9 @@ public class OrderListActivity extends AppCompatActivity {
         //initialize XML Tags
         orderListRec = findViewById(R.id.orderListRec);
         processListButton = findViewById(R.id.submitOrderButton);
+        qtyLabel = findViewById(R.id.qtyLabel);
 
+        //create an arraylist with the items in the table selected
         ArrayList<Item> items = dbConnection.getItemList(currentTable);
 
         //Declare and initialize adapters for recycler view
@@ -72,6 +76,7 @@ public class OrderListActivity extends AppCompatActivity {
     public void showResults(OrderResultsRecAdapter resultsAdapter){
         orderListRec.setAdapter(resultsAdapter);
         processListButton.setText(R.string.mainMenuButton);
+        qtyLabel.setText(R.string.orderQty);
         isResults = true;
     }
 }

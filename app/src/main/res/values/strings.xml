@@ -25,6 +25,8 @@
     <!-- labels -->
     <string name="itemNameLabel">Item Name</string>
     <string name="itemParLabel">Item Par Level</string>
+    <string name="itemOnHand">On Hand</string>
+    <string name="orderQty">Order Qty</string>
     <string name="deleteItemLabel">Delete</string>
     <string name="orderGuideName">Order Guide Name</string>
 

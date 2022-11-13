@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class EditOrderGuideActivity extends AppCompatActivity {
-
+    //Todo: Add hint instead of text to text boxes and par boxes
+    //Todo: Create exception for when there is no value in par edt box
     //declare tags from activity_edit_order_guide
     private EditText edtOrderGuideName;
     private Button btnAddItem;
