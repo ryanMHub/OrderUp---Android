@@ -130,7 +130,10 @@ public class MainActivity extends AppCompatActivity {
         viewOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Add intent for View Activity
+                Intent viewOrderIntent = new Intent(MainActivity.this, ViewOrderGuideActivity.class);
+                viewOrderIntent.putExtra("tableName", tableName);
+                startActivity(viewOrderIntent);
+                finish();
             }
         });
 
