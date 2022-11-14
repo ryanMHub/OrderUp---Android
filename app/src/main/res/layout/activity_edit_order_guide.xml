@@ -12,117 +12,154 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editHeaderImage"
-            android:src="@drawable/deleteheader01"
+            android:src="@drawable/editheader01"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:shapeAppearanceOverlay="@style/SpecificCornerRounded"/>
 
-    <!-- layout container for the Main label and Order Guide name edittext tag Also contains buttons and column labels-->
+    <!--Layout for the buttons-->
     <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:id="@+id/layoutLabelsEdit"
-                  android:orientation="vertical"
-                  android:layout_marginTop="5dp"
-                  android:gravity="top"
-                  app:layout_constraintHeight_percent="0.25"
-                  app:layout_constraintBottom_toTopOf="@id/layoutRecEdit"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toTopOf="parent">
-
-        <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="@string/editOrderGuideHeader"
-                  android:textSize="25dp"
+                  android:orientation="horizontal"
                   android:layout_marginTop="5dp"
+                  android:id="@+id/layoutButtonsEdit"
+                  app:layout_constraintTop_toBottomOf="@id/editHeaderImage">
+        <Button android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/addNewItem"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="2.5dp"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                style="@style/RedGrayButton"
+                android:id="@+id/btnAddItemEdit"
+                android:layout_gravity="center"/>
+        <Button android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/saveOrderGuide"
+                android:layout_marginStart="2.5dp"
+                android:layout_marginEnd="2.5dp"
+                android:id="@+id/btnSaveOrderGuideEdit"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                style="@style/RedGrayButton"
+                android:layout_gravity="center"/>
+        <Button android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cancelBtn"
+                android:layout_marginStart="2.5dp"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/btnCancelEdit"
+                android:textSize="18dp"
+                android:textColor="@color/yellow"
+                style="@style/RedGrayButton"
+                android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <!--divider line for display -->
+    <View android:layout_width="match_parent"
+          android:layout_height="4dp"
+          android:id="@+id/dividerLine03"
+          android:background="@color/forest"
+          app:layout_constraintTop_toBottomOf="@id/layoutButtonsEdit"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="0dp"/>
+
+    <!--order guide edit section-->
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/layoutGuideNameEdit"
+                  app:layout_constraintTop_toBottomOf="@id/dividerLine03"
+                  android:orientation="horizontal">
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="20dp"
+                  android:textSize="20dp"
+                  android:textColor="@color/lightBlueAccentDark"
                   android:textStyle="bold"
-                  android:gravity="center"/>
-
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/layoutGuideNameEdit"
-                      android:orientation="horizontal"
-                      android:gravity="center">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_gravity="center"
-                      android:text="@string/orderGuideName"/>
-            <EditText android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="15dp"
-                      android:gravity="center"
-                      android:id="@+id/edtOrderGuideNameEdit"/>
-
-        </LinearLayout>
-
-        <!--Layout for the buttons-->
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:id="@+id/layoutButtonsEdit"
-                      android:gravity="center"
-                      android:layout_marginTop="5dp"
-                      app:layout_constraintTop_toBottomOf="@id/layoutGuideNameEdit"
-                      app:layout_constraintBottom_toTopOf="@id/layoutColLabelsEdit"
-                      app:layout_constraintEnd_toEndOf="parent">
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="@string/addNewItem"
-                    android:id="@+id/btnAddItemEdit"
-                    android:layout_gravity="center"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/saveOrderGuide"
-                    android:id="@+id/btnSaveOrderGuideEdit"
-                    android:layout_gravity="center"/>
-            <Button android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="@string/cancelBtn"
-                    android:id="@+id/btnCancelEdit"
-                    android:layout_gravity="center"/>
-        </LinearLayout>
-
-        <!--Layout for column labels-->
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:layout_marginTop="5dp"
-                      app:layout_constraintTop_toBottomOf="@id/layoutButtonsEdit"
-                      app:layout_constraintBottom_toTopOf="@id/layoutRecEdit"
-                      android:id="@+id/layoutColLabelsEdit"
-                      android:gravity="left">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textStyle="bold"
-                      android:layout_marginStart="15dp"
-                      android:text="@string/deleteItemLabel"/>
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textStyle="bold"
-                      android:layout_marginStart="30dp"
-                      android:text="@string/itemNameLabel"/>
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textStyle="bold"
-                      android:layout_marginStart="150dp"
-                      android:text="@string/itemParLabel"/>
-
-        </LinearLayout>
+                  android:text="@string/orderGuideName"/>
+        <EditText android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="15dp"
+                  android:minWidth="175dp"
+                  android:gravity="center"
+                  android:id="@+id/edtOrderGuideNameEdit"/>
 
     </LinearLayout>
+
+
+    <!--divider line for display -->
+    <View android:layout_width="match_parent"
+          android:layout_height="4dp"
+          android:id="@+id/dividerLine04"
+          android:background="@color/forest"
+          app:layout_constraintTop_toBottomOf="@id/layoutGuideNameEdit"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginTop="5dp"
+          android:layout_marginBottom="5dp"/>
+
+    <!--Layout for column labels-->
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_marginTop="5dp"
+                  app:layout_constraintTop_toBottomOf="@id/dividerLine04"
+                  app:layout_constraintBottom_toTopOf="@id/dividerLine05"
+                  android:id="@+id/layoutColLabelsEdit"
+                  android:gravity="left">
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="15dp"
+                  android:layout_marginEnd="30dp"
+                  android:textStyle="bold"
+                  android:textColor="@color/lightBlueAccentDark"
+                  android:textSize="15dp"
+
+                  android:text="@string/deleteItemLabel"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textStyle="bold"
+                  android:textColor="@color/lightBlueAccentDark"
+                  android:textSize="15dp"
+
+                  android:text="@string/itemNameLabel"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textStyle="bold"
+                  android:textColor="@color/lightBlueAccentDark"
+                  android:textSize="15dp"
+                  android:layout_marginStart="195dp"
+                  android:text="@string/itemParLabel"/>
+
+    </LinearLayout>
+
+    <!--divider line for display -->
+    <View android:layout_width="match_parent"
+          android:layout_height="2dp"
+          android:id="@+id/dividerLine05"
+          android:background="@color/forest"
+          app:layout_constraintTop_toBottomOf="@id/layoutColLabelsEdit"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginTop="5dp"
+          android:layout_marginBottom="5dp"/>
 
     <!--layout for the recycler view displaying items -->
     <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
                                            android:layout_height="0dp"
                                            android:gravity="center"
                                            android:layout_marginTop="0dp"
-                                           app:layout_constraintHeight_percent=".7"
+                                           app:layout_constraintHeight_percent=".55"
                                            android:id="@+id/layoutRecEdit"
                                            android:layout_centerHorizontal="true"
-                                           app:layout_constraintTop_toBottomOf="@id/layoutLabelsEdit"
+                                           app:layout_constraintTop_toBottomOf="@id/dividerLine05"
                                            app:layout_constraintBottom_toBottomOf="parent"
                                            app:layout_constraintVertical_chainStyle="packed">
         <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"

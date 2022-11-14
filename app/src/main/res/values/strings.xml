@@ -16,7 +16,7 @@
     <string name="createOrderGuide">Create List</string>
     <string name="selectTableButton">Select Table</string>
     <string name="addNewItem">Add Item</string>
-    <string name="saveOrderGuide">Save Changes</string>
+    <string name="saveOrderGuide">Save</string>
 
     <!-- Header Labels -->
     <string name="editOrderGuideHeader">Edit Order Guide</string>
@@ -24,11 +24,11 @@
 
     <!-- labels -->
     <string name="itemNameLabel">Item Name</string>
-    <string name="itemParLabel">Item Par Level</string>
+    <string name="itemParLabel">Par</string>
     <string name="itemOnHand">On Hand</string>
     <string name="orderQty">Order Qty</string>
-    <string name="deleteItemLabel">Delete</string>
-    <string name="orderGuideName">Order Guide Name</string>
+    <string name="deleteItemLabel">Del</string>
+    <string name="orderGuideName">Order Guide Name:</string>
 
     <!--Delete order guide activity strings-->
     <string name="checkDeleteMsg">Are you sure you would like to delete this order guide?</string>

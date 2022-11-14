@@ -49,9 +49,9 @@
 
     <!--divider line for display -->
     <View android:layout_width="match_parent"
-          android:layout_height="3dp"
+          android:layout_height="4dp"
           android:id="@+id/dividerLine02"
-          android:background="@color/lightBlueAccentLight"
+          android:background="@color/forest"
           app:layout_constraintTop_toBottomOf="@id/buttonLayout"
           android:layout_marginStart="10dp"
           android:layout_marginEnd="10dp"

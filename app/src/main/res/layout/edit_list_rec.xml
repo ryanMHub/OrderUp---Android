@@ -5,10 +5,15 @@
               android:layout_height="wrap_content">
 
     <!-- Delete Item Button -->
-    <Button android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/red"
+    <Button android:layout_width="35dp"
+            android:layout_gravity="center"
+            android:text="x"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:textColor="@color/beigeAccentDark"
+            android:layout_height="35dp"
             android:id="@+id/btnDeleteItemEdit"
+            style="@style/BlueButton"
             android:layout_marginLeft="15dp"/>
 
     <!-- item name edit text tag-->
@@ -21,6 +26,8 @@
     <EditText android:layout_width="60dp"
               android:layout_height="wrap_content"
               android:id="@+id/edtItemParEdit"
+              android:textAlignment="textEnd"
+              android:layout_marginEnd="7dp"
               android:layout_marginLeft="15dp"/>
 
 </LinearLayout>
