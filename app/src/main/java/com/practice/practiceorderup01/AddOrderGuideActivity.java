@@ -34,10 +34,10 @@ public class AddOrderGuideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_order_guide);
 
         //initialize tags in activity_add_order_guide
-        edtTableName = findViewById(R.id.edtTableName);
-        newListRec = findViewById(R.id.newListRec);
-        btnAddItem = findViewById(R.id.btnAddItem);
-        btnCreateList = findViewById(R.id.btnCreateList);
+        edtTableName = findViewById(R.id.edtOrderGuideNameCreate);
+        newListRec = findViewById(R.id.createListRec);
+        btnAddItem = findViewById(R.id.btnAddItemCreate);
+        btnCreateList = findViewById(R.id.btnSaveOrderGuideCreate);
         btnCancelCreate = findViewById(R.id.btnCancelCreate);
 
         //initialize the database helper
@@ -48,8 +48,8 @@ public class AddOrderGuideActivity extends AppCompatActivity {
         ArrayList<Item> newItemList = new ArrayList<>();
 
         //create the adapter for the recycler and set the newItemList arraylist as the arraylist connected to the recycler
-        CreateOrderGuideRecAdapter adapter = new CreateOrderGuideRecAdapter();
-        adapter.setItemsList(newItemList);
+        EditOrderGuideRecAdapter adapter = new EditOrderGuideRecAdapter();
+        adapter.setItemList(newItemList);
 
         //connect the adapter to the recycler and set the layout manager to the recycler
         newListRec.setAdapter(adapter);
