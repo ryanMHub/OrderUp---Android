@@ -85,22 +85,24 @@
 </LinearLayout>
 
 <!--layout for the recycler view displaying items -->
-<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
-                                       android:layout_height="0dp"
-                                       android:gravity="center"
-                                       android:layout_marginTop="20dp"
-                                       app:layout_constraintHeight_percent=".65"
-                                       android:id="@+id/scrollForRecProcessView"
-                                       android:layout_centerHorizontal="true"
-                                       app:layout_constraintTop_toBottomOf="@id/labelLayoutView"
-                                       app:layout_constraintBottom_toBottomOf="parent"
-                                       android:layout_marginBottom="20dp"
-                                       app:layout_constraintVertical_chainStyle="packed">
-    <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
-                                               android:layout_height="match_parent"
-                                               app:layout_constrainedHeight="true"
-                                               android:id="@+id/orderListRecView"/>
-</androidx.core.widget.NestedScrollView>
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+                                           android:layout_height="0dp"
+                                           android:gravity="center"
+                                           android:layout_marginTop="20dp"
+                                           app:layout_constraintHeight_percent=".65"
+                                           android:id="@+id/scrollForRecProcessView"
+                                           android:layout_centerHorizontal="true"
+                                           app:layout_constraintTop_toBottomOf="@id/labelLayoutView"
+                                           app:layout_constraintBottom_toBottomOf="parent"
+                                           android:layout_marginBottom="20dp"
+                                           app:layout_constraintVertical_chainStyle="packed"
+                                           tools:layout_editor_absoluteX="-16dp"
+                                           app:layout_constraintVertical_bias="0.142">
+        <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   app:layout_constrainedHeight="true"
+                                                   android:id="@+id/orderListRecView"/>
+    </androidx.core.widget.NestedScrollView>
 
 
 
