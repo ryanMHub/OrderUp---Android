@@ -71,9 +71,14 @@ public class OrderListRecAdapter extends RecyclerView.Adapter<OrderListRecAdapte
                 @Override //Todo: check that all the error checking is done with try catch
                 //Todo: add a changeable max value
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { TODO: //Allow user to set max order size
-                    if(!(edtOnhand.getText().toString().trim().length() == 0 || Double.parseDouble(edtOnhand.getText().toString()) > 100 || 0 > Double.parseDouble(edtOnhand.getText().toString()))){
-                        items.get(getBindingAdapterPosition()).setOnHand(Double.parseDouble(String.valueOf(edtOnhand.getText())));
-                    }else{
+
+                    try{
+                        Double newOnHand = Double.parseDouble(edtOnhand.getText().toString().trim());
+                        items.get(getBindingAdapterPosition()).setOnHand(newOnHand);
+                    } catch(NumberFormatException ex){
+                        if(!(edtOnhand.getText().toString().equals("."))){
+                            edtOnhand.getText().clear();
+                        }
                         items.get(getBindingAdapterPosition()).setOnHand(0d);
                     }
                 }

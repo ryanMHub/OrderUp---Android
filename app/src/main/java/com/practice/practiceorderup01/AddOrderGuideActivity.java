@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,12 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class AddOrderGuideActivity extends AppCompatActivity {
-    //Todo: how to make the par level and itemanem have a hint
-    //Todo: Fix delete zero issue
-    //Todo: Add delete item to Create Order guide
+
+    //Todo: increase the appearance of the toasts
     //Todo: send a toast when creation is complete
-    //Todo: names with spaces crash
-    //Todo: When you click create the activity closes and does not open Main Activity ? Happened when I added a large amount of items or maybe a space in the name
     //declares the connection to the OrderGuide name editText tag
     private EditText edtTableName;
 
@@ -46,7 +44,6 @@ public class AddOrderGuideActivity extends AppCompatActivity {
         //initialize the database helper
         dbConnection = new DBHelper(this);
 
-        //Todo: move to global
         //arraylist will store a list of all the items in the new order guide
         ArrayList<Item> newItemList = new ArrayList<>();
 
@@ -58,33 +55,50 @@ public class AddOrderGuideActivity extends AppCompatActivity {
         newListRec.setAdapter(adapter);
         newListRec.setLayoutManager(new GridLayoutManager(this,1));
 
+        //Todo:Possibly remove
+        //listen for the virtual keyboard to open to adjust the recycler view
+        newListRec.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                newListRec.scrollToPosition(newItemList.size()-1);
+            }
+        });
+
         //Todo: Add items that are not used do not include in table currently databases has error when left empty
-        //Todo: Duplicate items creates creation of database error
-        //Todo: also when space added to name causes error
+
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newItemList.add(new Item("",0.0));
+                newItemList.add(new Item("Item Name",0.0));
+                adapter.notifyItemInserted(newItemList.size()-1);
+                adapter.notifyItemRangeChanged(0,newItemList.size());
                 adapter.notifyDataSetChanged();
             }
         });
 
-        //Todo: create error checking with toasts if data is not entered properly
-        //Todo: error checking if someone enters a nomnnumerical character currently crashes activity
+
         btnCreateList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //create a table based on the name provided by the user
-                dbConnection.createOrderGuideTable(edtTableName.getText().toString()); //Todo: add a toast to tell user if there was an error
+                //check if there is a value in the edittext box for the table if the space is empty
+                if(edtTableName.getText().toString().trim().isEmpty()){
+                    Toast.makeText(AddOrderGuideActivity.this, "Order Guide Name Required", Toast.LENGTH_SHORT).show();
+                } else if(dbConnection.tableExists(edtTableName.getText().toString())) {
+                    Toast.makeText(AddOrderGuideActivity.this, "Order Guide Name Unavailable", Toast.LENGTH_SHORT).show();
+                } else{
+                    //create a table based on the name provided by the user
+                    dbConnection.createOrderGuideTable(edtTableName.getText().toString()); //Todo: add a toast to tell user if there was an error
 
-                //loop through the newItemList and insert each item into new table
-                for(Item item : newItemList){
-                    dbConnection.onAdd(item, edtTableName.getText().toString());
+                    //loop through the newItemList and insert each item into new table
+                    for(Item item : newItemList){
+                        dbConnection.onAdd(item, edtTableName.getText().toString());
+                    }
+
+                    Intent intent = new Intent(AddOrderGuideActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
 
-                Intent intent = new Intent(AddOrderGuideActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
             }
         });
 
@@ -97,6 +111,13 @@ public class AddOrderGuideActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
+    //overide the back button
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(AddOrderGuideActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

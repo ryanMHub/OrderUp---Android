@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -66,6 +67,8 @@ public class EditOrderGuideActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 editItemList.add(new Item("Item Name", 0.0));
+                adapter.notifyItemInserted(editItemList.size()-1);
+                adapter.notifyItemRangeChanged(0,editItemList.size());
                 adapter.notifyDataSetChanged();
             }
         });
@@ -74,21 +77,26 @@ public class EditOrderGuideActivity extends AppCompatActivity {
         btnSaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //drop the original table in the database
-                dbConnection.dropTable(tableName);
 
-                //create the new table
-                dbConnection.createOrderGuideTable(edtOrderGuideName.getText().toString());
+                if(edtOrderGuideName.getText().toString().trim().isEmpty()){
+                    Toast.makeText(EditOrderGuideActivity.this, "Order Guide Name Required", Toast.LENGTH_SHORT).show();
+                } else{
+                    //drop the original table in the database
+                    dbConnection.dropTable(tableName);
 
-                //loop through the editTableList adding each item to the new table
-                for(Item item : editItemList){
-                    dbConnection.onAdd(item, edtOrderGuideName.getText().toString());
+                    //create the new table
+                    dbConnection.createOrderGuideTable(edtOrderGuideName.getText().toString());
+
+                    //loop through the editTableList adding each item to the new table
+                    for(Item item : editItemList){
+                        dbConnection.onAdd(item, edtOrderGuideName.getText().toString());
+                    }
+
+                    //return to main activity
+                    Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
-
-                //return to main activity
-                Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
             }
         });
 
@@ -102,6 +110,13 @@ public class EditOrderGuideActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    //overide the back button
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

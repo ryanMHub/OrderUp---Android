@@ -79,4 +79,12 @@ public class OrderListActivity extends AppCompatActivity {
         qtyLabel.setText(R.string.orderQty);
         isResults = true;
     }
+
+    //overide the back button
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(OrderListActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

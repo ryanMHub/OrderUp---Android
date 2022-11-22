@@ -31,8 +31,39 @@ public class EditOrderGuideRecAdapter extends RecyclerView.Adapter<EditOrderGuid
     @Override
     //link the values of the list by position in the list to each viewholder created for each item
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-        holder.edtItemNameEdit.setText(editItemList.get(position).getItemName()); //link item name by position in list
-        holder.edtItemParEdit.setText(String.valueOf(editItemList.get(position).getPar()));
+
+        holder.btnDeleteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteItem(holder.getBindingAdapterPosition());
+            }
+        });
+
+        if(editItemList.get(position).getItemName().equals("Item Name") || editItemList.get(position).getItemName().trim().isEmpty()){
+            holder.edtItemNameEdit.setText("");
+            holder.edtItemParEdit.setText("");
+            holder.edtItemNameEdit.setHint("Item Name"); //link item name by position in list
+            holder.edtItemParEdit.setHint("0.0");
+        } else{
+            holder.edtItemNameEdit.setText(editItemList.get(position).getItemName()); //link item name by position in list
+            holder.edtItemParEdit.setText(String.valueOf(editItemList.get(position).getPar()));
+        }
+
+
+
+        /*
+        if(editItemList.get(position).getItemName().equals("Item Name") || editItemList.get(position).getItemName().trim().isEmpty()){
+            holder.edtItemNameEdit.setHint("Item Name"); //link item name by position in list
+        } else{
+            holder.edtItemNameEdit.setText(editItemList.get(position).getItemName()); //link item name by position in list
+        }
+
+        if(editItemList.get(position).getPar() == 0.0){
+            holder.edtItemParEdit.setHint(String.valueOf(editItemList.get(position).getPar()));
+        } else{
+            holder.edtItemParEdit.setText(String.valueOf(editItemList.get(position).getPar()));
+        }*/
+
     }
 
     @Override
@@ -45,6 +76,13 @@ public class EditOrderGuideRecAdapter extends RecyclerView.Adapter<EditOrderGuid
     public void setItemList(ArrayList<Item> editItemList){
         this.editItemList = editItemList;
         notifyDataSetChanged();
+    }
+
+    public void deleteItem(int position){
+        editItemList.remove(position);
+        notifyItemRemoved(position);
+
+       // notifyItemRangeChanged(0,editItemList.size()-1);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -62,14 +100,6 @@ public class EditOrderGuideRecAdapter extends RecyclerView.Adapter<EditOrderGuid
             edtItemNameEdit = itemView.findViewById(R.id.edtItemNameEdit);
             edtItemParEdit = itemView.findViewById(R.id.edtItemParEdit);
 
-            //delete item from list when button clicked and update recycler
-            btnDeleteItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    editItemList.remove(getBindingAdapterPosition());
-                    notifyDataSetChanged();
-                }
-            });
 
             //monitor for changes to the item name and update editItemList when it occurs
             edtItemNameEdit.addTextChangedListener(new TextWatcher() {
@@ -80,7 +110,12 @@ public class EditOrderGuideRecAdapter extends RecyclerView.Adapter<EditOrderGuid
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    editItemList.get(getBindingAdapterPosition()).setItemName(edtItemNameEdit.getText().toString());
+                    if(edtItemNameEdit.getText().toString().trim().isEmpty()){
+                        editItemList.get(getBindingAdapterPosition()).setItemName("Item Name");
+                    } else{
+                        editItemList.get(getBindingAdapterPosition()).setItemName(edtItemNameEdit.getText().toString());
+                    }
+
                 }
 
                 @Override
@@ -98,7 +133,17 @@ public class EditOrderGuideRecAdapter extends RecyclerView.Adapter<EditOrderGuid
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    editItemList.get(getBindingAdapterPosition()).setPar(Double.parseDouble(edtItemParEdit.getText().toString()));
+
+                    try{
+                        Double newPar = Double.parseDouble(edtItemParEdit.getText().toString());
+                        editItemList.get(getBindingAdapterPosition()).setPar(newPar);
+                    } catch (NumberFormatException ex) {
+                        if(!(edtItemParEdit.getText().toString().equals("."))){
+                            edtItemParEdit.getText().clear();
+                        }
+
+                        editItemList.get(getBindingAdapterPosition()).setPar(0.0);
+                    }
                 }
 
                 @Override

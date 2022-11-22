@@ -10,6 +10,8 @@
             android:text="x"
             android:textStyle="bold"
             android:textSize="25dp"
+            android:layout_marginTop="2.5dp"
+            android:layout_marginBottom="2.5dp"
             android:textColor="@color/beigeAccentDark"
             android:layout_height="35dp"
             android:id="@+id/btnDeleteItemEdit"
@@ -17,16 +19,24 @@
             android:layout_marginLeft="15dp"/>
 
     <!-- item name edit text tag-->
-    <EditText android:layout_width="260dp"
+    <EditText android:layout_width="0dp"
               android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:layout_marginTop="2.5dp"
+              android:layout_marginBottom="2.5dp"
               android:id="@+id/edtItemNameEdit"
+              android:maxLines="1"
               android:layout_marginLeft="15dp"/>
 
     <!-- item par level edit text tag -->
     <EditText android:layout_width="60dp"
               android:layout_height="wrap_content"
+              android:layout_marginTop="2.5dp"
+              android:layout_marginBottom="2.5dp"
               android:id="@+id/edtItemParEdit"
               android:textAlignment="textEnd"
+              android:inputType="numberDecimal"
+              android:maxLines="1"
               android:layout_marginEnd="7dp"
               android:layout_marginLeft="15dp"/>
 

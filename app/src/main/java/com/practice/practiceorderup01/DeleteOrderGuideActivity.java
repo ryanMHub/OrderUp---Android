@@ -63,7 +63,13 @@ public class DeleteOrderGuideActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
-
+    //overide the back button
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(DeleteOrderGuideActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

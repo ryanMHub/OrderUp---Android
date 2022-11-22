@@ -27,8 +27,11 @@ public class OrderResultsRecAdapter extends RecyclerView.Adapter<OrderResultsRec
     @Override   //bind the item name to the text box and the order results to the text box
     public void onBindViewHolder(@NonNull @NotNull OrderResultsRecAdapter.ViewHolder holder, int position) {
         holder.txtItemName.setText(items.get(position).getItemName());
-        //Todo: stop negative results from showing
-        holder.txtResults.setText(Double.toString(items.get(position).getPar() - items.get(position).getOnHand()));
+
+        //store the result of amount to order
+        Double orderAmt = items.get(position).getPar() - items.get(position).getOnHand();
+        orderAmt = (orderAmt <= 0.0)?0.0:(orderAmt<1)?1.0:orderAmt;
+        holder.txtResults.setText(Double.toString(orderAmt));
     }
 
     @Override   //return the size of the array

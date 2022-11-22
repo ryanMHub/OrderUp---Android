@@ -83,7 +83,14 @@ public class CreateOrderGuideRecAdapter extends RecyclerView.Adapter<CreateOrder
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    newItemList.get(getBindingAdapterPosition()).setPar(Double.parseDouble(parLevel.getText().toString()));
+
+                    if(parLevel.getText().toString().equals("")) {
+                        newItemList.get(getBindingAdapterPosition()).setPar(0.0);
+                    } else{
+                        Double newPar = Double.parseDouble(parLevel.getText().toString());
+                        newItemList.get(getBindingAdapterPosition()).setPar(newPar);
+                    }
+
                 }
 
                 @Override

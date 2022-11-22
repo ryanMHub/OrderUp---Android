@@ -13,24 +13,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
+
+    private enum Action { //enum is used to switch which activity to execute when dealing with existing order guides
+        View(ViewOrderGuideActivity.class),
+        Process(OrderListActivity.class),
+        Delete(DeleteOrderGuideActivity.class),
+        Edit(EditOrderGuideActivity.class);
+
+        Class className;
+
+        Action(Class className){
+            this.className = className;
+        }
+    }
+
     //Todo:Enhance the spinner design
     //declare spinners
     private Spinner spinnerOrderGuides;
-
-    //Todo: Clean up code when finished replacing
-    //All the comments below have been replaced by buttons
-    //private Spinner spinnerActionOption;
-    //declare button
-    //private Button selectActionButton;
-    //declare textviews
-    //private TextView addOrderGuide;
 
     //Declare the database connection
     private DBHelper dbConnection;
 
     //Declare and initialize the values that will store the selection in the spinners
     private String tableName = "";
-    private String actionOption = "";
 
     //array to store all the table names in the database *Order Guides*
     private ArrayList<String> orderGuides;
@@ -57,14 +62,6 @@ public class MainActivity extends AppCompatActivity {
         //links to the spinner on activity_main that displays the tablenames in the orderGuide database
         spinnerOrderGuides = findViewById(R.id.spinnerOrderGuides);
 
-        //Todo: clean up replaced by buttons final
-        //links to the spinner on the activity_main that displays the action options to perform on the selected table
-        //spinnerActionOption = findViewById(R.id.spinnerActionOption);
-        //links to the button that will pass the tablename to the OrderListActivity
-        //selectActionButton = findViewById(R.id.selectTableButton);
-        //links the textview that will pass user to the add orderGuide activity
-        //addOrderGuide = findViewById(R.id.txtAddOrderGuide);
-
         //Arraylist contains the table names to be used in the orderGuide spinner in activity_main.xml
         //and adapt the arraylist to the spinner in the display
         orderGuides = dbConnection.getTableNames();
@@ -86,28 +83,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Todo: Remove when done changing to buttons
-        //Arraylist is create to store the action options that will be adapted to the actionOptions spinner on the activity_main.xml
-        //Resources res = getResources();
-        //ArrayList<String> actionOptions = new ArrayList<>(Arrays.asList(res.getStringArray(R.array.actionOptions)));
-        //create the adapter for the above list
-        //ArrayAdapter<String> actionOptionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, actionOptions);
-        //actionOptionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //spinnerActionOption.setAdapter(actionOptionAdapter);
-        //action taken when the action option is changed
-        /*spinnerActionOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                //Toast.makeText(MainActivity.this, "The selected option is " + actionOptions.get(position), Toast.LENGTH_SHORT).show();
-                actionOption = actionOptions.get(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });*/
-
         //initialize all buttons from the main_activity.xml
         createOrderBtn = findViewById(R.id.createOrderButton);
         viewOrderBtn = findViewById(R.id.viewOrderButton);
@@ -125,15 +100,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Todo: add the view order guide activity
         //View Order Guide executes ViewOrderGuideActivity
         viewOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewOrderIntent = new Intent(MainActivity.this, ViewOrderGuideActivity.class);
-                viewOrderIntent.putExtra("tableName", tableName);
-                startActivity(viewOrderIntent);
-                finish();
+                executeActivity(Action.View);
             }
         });
 
@@ -142,10 +113,7 @@ public class MainActivity extends AppCompatActivity {
         processOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentProcessOrder = new Intent(MainActivity.this, OrderListActivity.class);
-                intentProcessOrder.putExtra("tableName", tableName);
-                startActivity(intentProcessOrder);
-                finish();
+                executeActivity(Action.Process);
             }
         });
 
@@ -153,10 +121,7 @@ public class MainActivity extends AppCompatActivity {
         editOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentEditOrderGuide= new Intent(MainActivity.this, EditOrderGuideActivity.class);
-                intentEditOrderGuide.putExtra("tableName", tableName);
-                startActivity(intentEditOrderGuide);
-                finish();
+                executeActivity(Action.Edit);
             }
         });
 
@@ -164,60 +129,9 @@ public class MainActivity extends AppCompatActivity {
         deleteOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentDeleteOrderGuide= new Intent(MainActivity.this, DeleteOrderGuideActivity.class);
-                intentDeleteOrderGuide.putExtra("tableName", tableName);
-                startActivity(intentDeleteOrderGuide);
-                finish();
+                executeActivity(Action.Delete);
             }
         });
-    //Todo: remove when button replacement complete
-   /*     selectActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //check that the tablename selected is valid and that there is a table in the arraylist
-                //otherwise return
-                if(orderGuides.isEmpty() || !(dbConnection.tableExists(tableName))){
-                    Toast.makeText(MainActivity.this, "NOt a Valid Table", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                //matches the selected option in the spinner to the value in the array which will send use to selected activity
-                switch(indexOf(actionOptions, actionOption)){
-                    case 0: //this case will access the process order
-                        Intent intentProcessOrder = new Intent(MainActivity.this, OrderListActivity.class);
-                        intentProcessOrder.putExtra("tableName", tableName);
-                        startActivity(intentProcessOrder);
-                        finish();
-                        break;
-
-                    case 1: //this case will access the edit order guide activity
-                        Intent intentEditOrderGuide= new Intent(MainActivity.this, EditOrderGuideActivity.class);
-                        intentEditOrderGuide.putExtra("tableName", tableName);
-                        startActivity(intentEditOrderGuide);
-                        finish();
-                        break;
-
-                    case 2: //this case will access the delete order guide activity
-                        Intent intentDeleteOrderGuide= new Intent(MainActivity.this, DeleteOrderGuideActivity.class);
-                        intentDeleteOrderGuide.putExtra("tableName", tableName);
-                        startActivity(intentDeleteOrderGuide);
-                        finish();
-                        break;
-
-                    default:
-                        Toast.makeText(MainActivity.this, "Invalid Action Option", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        addOrderGuide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddOrderGuideActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });*/
 
 
     }
@@ -242,12 +156,16 @@ public class MainActivity extends AppCompatActivity {
         spinnerOrderGuides.setAdapter(tableNameAdapter);
     }*/
 
-    //returns the index of the value in the string array when compared to a value
-    private int indexOf(ArrayList<String> values, String keyValue){
-        for(int i = 0 ; i < values.size() ; i++){
-            if(values.get(i).equals(keyValue)) return i;
-        }
+    private void executeActivity(Action action){
 
-        return -1;
+        if(dbConnection.tableExists(tableName)){
+            Intent intentDeleteOrderGuide= new Intent(MainActivity.this, action.className);
+            intentDeleteOrderGuide.putExtra("tableName", tableName);
+            startActivity(intentDeleteOrderGuide);
+            finish();
+        } else{
+            Toast.makeText(this, "Order Guide Does not Exist", Toast.LENGTH_SHORT).show();
+        }
     }
+
 }

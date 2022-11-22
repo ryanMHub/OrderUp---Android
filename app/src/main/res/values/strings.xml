@@ -34,10 +34,10 @@
     <string name="checkDeleteMsg">Are you sure you would like to delete this order guide?</string>
 
     <!--Table Action options-->
-    <string name="processOrder">Process \n Order Guide</string>
-    <string name="editOrder">Edit \n Order Guide</string>
-    <string name="deleteOrder">Delete \n Order Guide</string>
-    <string name="viewOrder">View \n Order Guide</string>
+    <string name="processOrder">Process \n Order \n Guide</string>
+    <string name="editOrder">Edit \n Order \n Guide</string>
+    <string name="deleteOrder">Delete \n Order \n Guide</string>
+    <string name="viewOrder">View \n Order \n Guide</string>
     <!--Create a new order guide button-->
     <string name="createOrder">Create New Order Guide</string>
 

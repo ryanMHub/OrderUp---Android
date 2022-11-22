@@ -59,4 +59,12 @@ public class ViewOrderGuideActivity extends AppCompatActivity {
             }
         });
     }
+
+    //overide the back button
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(ViewOrderGuideActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

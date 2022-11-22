@@ -20,11 +20,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(@Nullable Context context) {
         super(context, "orderGuide.db", null, 1);
-        //when the database helper class is constructed if the test db does not exist in
-        //the database create it
+
+        //Used for createing a test table when starting
+        /*
         if(!(tableExists(ORDER_TABLE))){
             buildTestTable();
-        }
+        }*/
     }
 
     //
@@ -42,6 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //Todo:maybe create error checking a bypass system with a long of rejections
     public boolean onAdd(Item item, String tableName){
 
+        tableName = "\"" + tableName +"\"";
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -59,7 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //builds a test table
     public void buildTestTable(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        String createTableStatement = "CREATE TABLE IF NOT EXISTS " + ORDER_TABLE + " (" + ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ITEM_NAME + " TEXT, " + ITEM_PAR + " REAL)";
+        String createTableStatement = "CREATE TABLE IF NOT EXISTS \"" + ORDER_TABLE + "\" (" + ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ITEM_NAME + " TEXT, " + ITEM_PAR + " REAL)";
         sqLiteDatabase.execSQL(createTableStatement);
 
         this.onAdd(new Item("Bud Light", 10.0), ORDER_TABLE);
@@ -71,6 +73,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //creates a table in the database based on the name provided by the user
     public boolean createOrderGuideTable(String tableName){
 
+        tableName = "\"" + tableName +"\"";
         //if the table already exists return false
         if(tableExists(tableName)){
             return false;
@@ -84,6 +87,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //Returns a list of items from the provided tablename
     public ArrayList<Item> getItemList(String tableName){
+
+        tableName = "\"" + tableName +"\""; //add quotations around the table names to protect from white space errors
 
         ArrayList<Item> returnList = new ArrayList<>();
         String queryString = "SELECT * FROM " + tableName;
@@ -157,12 +162,14 @@ public class DBHelper extends SQLiteOpenHelper {
     //this method will drop the table that is passed to it
     public void dropTable(String tableName){
 
+        tableName = "\"" + tableName +"\"";
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         String statement = "DROP TABLE IF EXISTS " + tableName;
 
         db.execSQL(statement);
-        //db.execSQL("COMMIT");
+
         db.close();
 
     }
