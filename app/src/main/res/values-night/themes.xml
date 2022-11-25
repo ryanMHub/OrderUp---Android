@@ -25,4 +25,8 @@
     <style name="RedGrayButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/button_selector_03</item>
     </style>
+
+    <style name="Neon01" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/neon_selector_01</item>
+    </style>
 </resources>
