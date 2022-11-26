@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+    <!--Stores the image for each item in the spinner-->
+    <ImageView android:layout_width="32dp"
+               android:layout_height="32dp"
+               android:id="@+id/iconHolder"
+               android:src="@drawable/beer_small"
+               android:layout_marginStart="8dp"/>
+
+    <!--Stores the name of the icon or the order guide-->
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/nameHolder"
+              android:text="Name"
+              android:layout_toRightOf="@+id/iconHolder"
+              android:layout_centerVertical="true"
+              android:layout_marginStart="8dp"/>
+
+</RelativeLayout>

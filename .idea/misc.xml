@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/drawable/bg_spinner_icon.xml" value="0.1" />
+        <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/drawable/bg_spinner_icon_up.xml" value="0.1845" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/drawable/button_gradient_beige_1.xml" value="0.1035" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/drawable/button_gradient_beige_2.xml" value="0.1035" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/drawable/button_gradient_blue_1.xml" value="0.177" />
@@ -14,6 +16,7 @@
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/drawable/button_selector_02.xml" value="0.1035" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/drawable/button_selector_03.xml" value="0.1" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/drawable/neon_selector_01.xml" value="0.1175" />
+        <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/drawable/spinner_popup_background.xml" value="0.1845" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/layout/activity_add_order_guide.xml" value="0.264" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/layout/activity_delete_order_guide.xml" value="0.2359375" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/layout/activity_edit_order_guide.xml" value="0.264" />
@@ -23,6 +26,7 @@
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/layout/ceate_list_rec.xml" value="0.23489583333333333" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/layout/create_list_rec.xml" value="0.5651629072681704" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/layout/edit_list_rec.xml" value="0.2359375" />
+        <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/layout/icon_view.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/layout/order_list_item.xml" value="0.2359375" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/layout/order_list_main.xml" value="0.25" />
         <entry key="..\:/Users/vonha/IntelliJIDEAProjects/PracticeOrderUp01/app/src/main/res/layout/order_list_results.xml" value="0.23489583333333333" />

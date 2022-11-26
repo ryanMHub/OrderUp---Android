@@ -2,18 +2,16 @@ package com.practice.practiceorderup01;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class AddOrderGuideActivity extends AppCompatActivity {
+public class AddOrderGuideActivity extends AppCompatActivity implements CustomSpinner.OnSpinnerEventsListener {
 
     //Todo: increase the appearance of the toasts
     //Todo: send a toast when creation is complete
@@ -26,6 +24,11 @@ public class AddOrderGuideActivity extends AppCompatActivity {
     private Button btnAddItem; //declares connection to the tag that will add a new item to the list
     private Button btnCreateList; //declares connection to the tag that will create the new orderGuide in the database
     private Button btnCancelCreate; //declares connection to the tag that will be used to cancel create an order guide activity
+
+    private CustomSpinner iconSpinner; //declares the spinner that will contain the selectable icons for order guides
+    private IconAdapter iconAdapter; //will adapt the icons list to the spinner
+    private List<Icons> iconsList; //stores the list of icons locally
+    private int selectedIcon; //stores the id of the currently selected icon
 
     private DBHelper dbConnection; //used to access the DB to create the order guide
 
@@ -40,9 +43,34 @@ public class AddOrderGuideActivity extends AppCompatActivity {
         btnAddItem = findViewById(R.id.btnAddItemCreate);
         btnCreateList = findViewById(R.id.btnSaveOrderGuideCreate);
         btnCancelCreate = findViewById(R.id.btnCancelCreate);
+        iconSpinner = findViewById(R.id.iconSpinner);
 
         //initialize the database helper
         dbConnection = new DBHelper(this);
+
+        //adapt the icons list to the spinner
+        iconsList = IconList.getIconsList();
+        iconAdapter = new IconAdapter(this, iconsList);
+        iconSpinner.setAdapter(iconAdapter);
+        iconSpinner.setDropDownVerticalOffset(110);
+
+        //set spinner event listener
+        iconSpinner.setSpinnerEventsListener(this);
+        //store the initial icon to selectedIcon
+        selectedIcon = iconsList.get(iconSpinner.getSelectedItemPosition()).getImage();
+
+        //on change listener for spinner when user selects icon
+        iconSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedIcon = iconsList.get(iconSpinner.getSelectedItemPosition()).getImage();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         //arraylist will store a list of all the items in the new order guide
         ArrayList<Item> newItemList = new ArrayList<>();
@@ -94,6 +122,8 @@ public class AddOrderGuideActivity extends AppCompatActivity {
                         dbConnection.onAdd(item, edtTableName.getText().toString());
                     }
 
+                    dbConnection.addIconDirectorEntry(edtTableName.getText().toString(), selectedIcon);
+
                     Intent intent = new Intent(AddOrderGuideActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -119,5 +149,17 @@ public class AddOrderGuideActivity extends AppCompatActivity {
         Intent intent = new Intent(AddOrderGuideActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    //action to be taken when spinner is open
+    @Override
+    public void onPopupWindowOpened(Spinner spinner) {
+        iconSpinner.setBackground(getDrawable(R.drawable.bg_spinner_icon_up));
+    }
+
+    //action to be taken when spinner closed
+    @Override
+    public void onPopupWindowClosed(Spinner spinner) {
+        iconSpinner.setBackground(getDrawable(R.drawable.bg_spinner_icon));
     }
 }

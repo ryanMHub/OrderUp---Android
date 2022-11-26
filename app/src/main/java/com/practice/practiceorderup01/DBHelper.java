@@ -18,8 +18,17 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String ITEM_NAME = "ITEM_NAME";
     public static final String ITEM_PAR = "ITEM_PAR";
 
+    public static final String ICON_DIRECTOR = "ICON_DIRECTOR";
+    public static final String TABLE_NAME = "TABLE_NAME";
+    public static final String ICON_ID = "ICON_ID";
+
     public DBHelper(@Nullable Context context) {
         super(context, "orderGuide.db", null, 1);
+
+        //if the icon director table does not exist create it
+        if(!(tableExists(ICON_DIRECTOR))){
+            createIconDirector(ICON_DIRECTOR);
+        }
 
         //Used for createing a test table when starting
         /*
@@ -68,6 +77,39 @@ public class DBHelper extends SQLiteOpenHelper {
         this.onAdd(new Item("Budweiser", 20.0), ORDER_TABLE);
         this.onAdd(new Item("Corona", 15.0), ORDER_TABLE);
         this.onAdd(new Item("Tequila", 0.5), ORDER_TABLE);
+    }
+
+    //Adds the icon director table to the database
+    public boolean createIconDirector(String tableName){
+
+        tableName = "\"" + tableName +"\"";
+
+        //if the table already exists return false
+        if(tableExists(tableName)){
+            return false;
+        } else{
+            String createTableStatement = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + TABLE_NAME + " TEXT PRIMARY KEY, " + ICON_ID + " INTEGER)";
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.execSQL(createTableStatement);
+            return true;
+        }
+    }
+
+    //add entry to icon director
+    public boolean addIconDirectorEntry(String tableKey, int iconID){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(TABLE_NAME, tableKey);
+        cv.put(ICON_ID, iconID);
+
+        long insert = db.insert(ICON_DIRECTOR, null, cv);
+        if(insert == -1){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     //creates a table in the database based on the name provided by the user
