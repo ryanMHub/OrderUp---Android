@@ -10,6 +10,11 @@ public class Icons implements Serializable {
     public Icons(){
     }
 
+    public Icons(String name, int image){
+        this.name = name;
+        this.image = image;
+    }
+
     //returns the name of the image
     public String getName(){
         return this.name;

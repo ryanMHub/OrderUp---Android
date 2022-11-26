@@ -104,11 +104,50 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="15dp"
                   android:minWidth="175dp"
-                  android:textSize="20sp"
+                  android:textSize="18sp"
                   android:maxLines="1"
                   android:gravity="center"
                   android:id="@+id/edtOrderGuideNameEdit"/>
     </LinearLayout>
+
+    <!--divider line for display -->
+    <View android:layout_width="match_parent"
+          android:layout_height="4dp"
+          android:id="@+id/dividerLine06"
+          android:background="@color/forest"
+          app:layout_constraintTop_toBottomOf="@id/layoutGuideNameEdit"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="0dp"/>
+
+    <!--This layout contains the spinner and label for the icon selector-->
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintHeight_percent=".05"
+                    app:layout_constraintTop_toBottomOf="@id/dividerLine06"
+                    android:id="@+id/layoutIconEdit">
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentLeft="true"
+                  android:id="@+id/iconSelectLabel"
+                  android:textSize="20sp"
+                  android:textStyle="bold"
+                  android:textColor="@color/lightBlueAccentDark"
+                  android:layout_marginStart="20dp"
+                  android:text="Select Icon - "/>
+        <com.practice.practiceorderup01.CustomSpinner android:layout_width="wrap_content"
+                                                      android:layout_height="wrap_content"
+                                                      android:layout_marginTop="5dp"
+                                                      android:spinnerMode="dropdown"
+                                                      android:layout_toRightOf="@id/iconSelectLabel"
+                                                      android:layout_alignParentRight="true"
+                                                      android:popupBackground="@drawable/spinner_popup_background"
+                                                      android:layout_marginEnd="20dp"
+                                                      android:background="@drawable/bg_spinner_icon"
+                                                      android:id="@+id/iconSpinner"/>
+    </RelativeLayout>
 
 
     <!--divider line for display -->
@@ -116,7 +155,7 @@
           android:layout_height="4dp"
           android:id="@+id/dividerLine04"
           android:background="@color/forest"
-          app:layout_constraintTop_toBottomOf="@id/layoutGuideNameEdit"
+          app:layout_constraintTop_toBottomOf="@id/layoutIconEdit"
           android:layout_marginStart="10dp"
           android:layout_marginEnd="10dp"
           android:layout_marginTop="5dp"
@@ -174,7 +213,7 @@
                                            android:layout_height="0dp"
                                            android:gravity="center"
                                            android:layout_marginTop="0dp"
-                                           app:layout_constraintHeight_percent=".50"
+                                           app:layout_constraintHeight_percent=".44"
                                            android:id="@+id/layoutRecEdit"
                                            android:layout_centerHorizontal="true"
                                            app:layout_constraintLeft_toLeftOf="parent"

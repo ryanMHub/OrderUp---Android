@@ -22,6 +22,6 @@
     <color name="yellow">#FFE500</color>
     <color name="trans_parent">#00000000</color>
     <color name="spinner_popup_border">#668CD6</color>
-    <color mame="spinner_popup_inner">#FF000000</color>
+    <color name="spinner_popup_inner">#FF000000</color>
 
 </resources>

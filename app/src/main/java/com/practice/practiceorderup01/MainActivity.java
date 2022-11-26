@@ -12,7 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CustomSpinner.OnSpinnerEventsListener{
+
 
     private enum Action { //enum is used to switch which activity to execute when dealing with existing order guides
         View(ViewOrderGuideActivity.class),
@@ -29,18 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
     //Todo:Enhance the spinner design
     //declare spinners
-    private Spinner spinnerOrderGuides;
+    private CustomSpinner spinnerOrderGuides;
+    private IconAdapter iconAdapter; //will adapt the icons list to the spinner
+    private ArrayList<MenuItemList> orderGuides; //array to store all the table names  and icon indexs in table ICON_DIRECTOR*
 
     //Declare the database connection
     private DBHelper dbConnection;
 
     //Declare and initialize the values that will store the selection in the spinners
     private String tableName = "";
-
-    //array to store all the table names in the database *Order Guides*
-    private ArrayList<String> orderGuides;
-    //Array adapter for the order guides array
-    private ArrayAdapter<String> tableNameAdapter;
 
     //declare buttons from activity_main.xml
     private Button createOrderBtn;
@@ -64,17 +62,20 @@ public class MainActivity extends AppCompatActivity {
 
         //Arraylist contains the table names to be used in the orderGuide spinner in activity_main.xml
         //and adapt the arraylist to the spinner in the display
-        orderGuides = dbConnection.getTableNames();
-        tableNameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, orderGuides);
-        tableNameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerOrderGuides.setAdapter(tableNameAdapter);
+        orderGuides = dbConnection.getAllIconTableList();
+        iconAdapter = new IconAdapter(this, IconList.convertIndexToReferenceImage(orderGuides));
+        spinnerOrderGuides.setAdapter(iconAdapter);
+        spinnerOrderGuides.setDropDownVerticalOffset(110);
+
+        //set spinner event listener
+        spinnerOrderGuides.setSpinnerEventsListener(this);
 
         //action taken when you select a value in the spinner
         spinnerOrderGuides.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 //Toast.makeText(MainActivity.this, "The selected table is " + orderGuides.get(position), Toast.LENGTH_SHORT).show();
-                tableName = orderGuides.get(position);
+                tableName = orderGuides.get(position).getTableName();
             }
 
             @Override
@@ -136,17 +137,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Todo:Fix the back button
-    //Todo: Do I need this.
-    @Override
-    protected void onRestart(){
-        super.onRestart();
-        orderGuides = dbConnection.getTableNames();
-        tableNameAdapter.notifyDataSetChanged();
-        spinnerOrderGuides.setAdapter(tableNameAdapter);
-
-    }
-
     //tODO: restart or resume which one should handle this action
     /*@Override
     protected void onResume(){
@@ -166,6 +156,18 @@ public class MainActivity extends AppCompatActivity {
         } else{
             Toast.makeText(this, "Order Guide Does not Exist", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    //action to be taken when spinner is open
+    @Override
+    public void onPopupWindowOpened(Spinner spinner) {
+        spinnerOrderGuides.setBackground(getDrawable(R.drawable.bg_spinner_icon_up));
+    }
+
+    //action to be taken when spinner closed
+    @Override
+    public void onPopupWindowClosed(Spinner spinner) {
+        spinnerOrderGuides.setBackground(getDrawable(R.drawable.bg_spinner_icon));
     }
 
 }

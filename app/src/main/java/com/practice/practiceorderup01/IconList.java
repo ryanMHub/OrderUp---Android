@@ -85,4 +85,20 @@ public class IconList {
         //return the iconList to caller
         return iconsList;
     }
+
+    //converts the index of the icon to the image reference and packages the data to send to the adapter
+    public static List<Icons> convertIndexToReferenceImage(List<MenuItemList> menuItems){
+        //retrieve the list of icons to compare to the index
+        List<Icons> iconsList = getIconsList();
+        //ArrayList that will be returned
+        List<Icons> returnList = new ArrayList<>();
+
+        //loop thru menuItems converting the index of image in an image
+        // reference and adding the table name and image to the returnList
+        for(MenuItemList item : menuItems){
+            returnList.add(new Icons(item.getTableName(),iconsList.get(item.getIconID()).getImage()));
+        }
+
+        return returnList;
+    }
 }

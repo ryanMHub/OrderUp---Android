@@ -2,17 +2,16 @@ package com.practice.practiceorderup01;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class EditOrderGuideActivity extends AppCompatActivity {
+public class EditOrderGuideActivity extends AppCompatActivity implements CustomSpinner.OnSpinnerEventsListener {
     //Todo: Add hint instead of text to text boxes and par boxes
     //Todo: Create exception for when there is no value in par edt box
     //Todo: add a toast when the edit is complete, custom fix the delete and the add
@@ -25,6 +24,12 @@ public class EditOrderGuideActivity extends AppCompatActivity {
 
     //stores the table name passed from main and changed by user
     private String tableName;
+
+    private CustomSpinner iconSpinner; //declares the spinner that will contain the selectable icons for order guides
+    private IconAdapter iconAdapter; //will adapt the icons list to the spinner
+    private List<Icons> iconsList; //stores the list of icons locally
+    private int selectedIcon; //stores the id of the currently selected icon
+
     //Database connection declaration;
     private DBHelper dbConnection;
 
@@ -45,9 +50,36 @@ public class EditOrderGuideActivity extends AppCompatActivity {
         btnSaveChanges = findViewById(R.id.btnSaveOrderGuideEdit);
         btnCancel = findViewById(R.id.btnCancelEdit);
         orderGuideRec = findViewById(R.id.editListRec);
+        iconSpinner = findViewById(R.id.iconSpinner);
 
         //initialize database connection
         dbConnection = new DBHelper(this);
+
+        //adapt the icons list to the spinner
+        iconsList = IconList.getIconsList();
+        iconAdapter = new IconAdapter(this, iconsList);
+        iconSpinner.setAdapter(iconAdapter);
+        iconSpinner.setDropDownVerticalOffset(110);
+
+        //set spinner event listener
+        iconSpinner.setSpinnerEventsListener(this);
+        //set spinner position to the tables saved icon by position in array
+        iconSpinner.setSelection(dbConnection.getIconIndex(tableName));
+        //store the initial icon to selectedIcon
+        selectedIcon = iconSpinner.getSelectedItemPosition();
+
+        //on change listener for spinner when user selects icon
+        iconSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedIcon = iconSpinner.getSelectedItemPosition();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         //set the text to the order guide name selected
         edtOrderGuideName.setText(tableName);
@@ -81,8 +113,9 @@ public class EditOrderGuideActivity extends AppCompatActivity {
                 if(edtOrderGuideName.getText().toString().trim().isEmpty()){
                     Toast.makeText(EditOrderGuideActivity.this, "Order Guide Name Required", Toast.LENGTH_SHORT).show();
                 } else{
-                    //drop the original table in the database
+                    //drop the original table in the database, and it's associated icon from ICON_DIRECTOR
                     dbConnection.dropTable(tableName);
+                    dbConnection.dropRowInIconDirector(tableName);
 
                     //create the new table
                     dbConnection.createOrderGuideTable(edtOrderGuideName.getText().toString());
@@ -91,6 +124,9 @@ public class EditOrderGuideActivity extends AppCompatActivity {
                     for(Item item : editItemList){
                         dbConnection.onAdd(item, edtOrderGuideName.getText().toString());
                     }
+
+                    //add entry in ICON_DIRECTOR for this table
+                    dbConnection.addIconDirectorEntry(edtOrderGuideName.getText().toString(), selectedIcon);
 
                     //return to main activity
                     Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
@@ -112,11 +148,23 @@ public class EditOrderGuideActivity extends AppCompatActivity {
 
     }
 
-    //overide the back button
+    //override the back button
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    //action to be taken when spinner is open
+    @Override
+    public void onPopupWindowOpened(Spinner spinner) {
+        iconSpinner.setBackground(getDrawable(R.drawable.bg_spinner_icon_up));
+    }
+
+    //action to be taken when spinner closed
+    @Override
+    public void onPopupWindowClosed(Spinner spinner) {
+        iconSpinner.setBackground(getDrawable(R.drawable.bg_spinner_icon));
     }
 }

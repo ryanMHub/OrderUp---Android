@@ -46,6 +46,7 @@ public class DeleteOrderGuideActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dbConnection.dropRowInIconDirector(currentTable);
                 dbConnection.dropTable(currentTable);
                 Toast.makeText(DeleteOrderGuideActivity.this, currentTable + " Has Been Delete", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(DeleteOrderGuideActivity.this, MainActivity.class);

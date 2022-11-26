@@ -57,13 +57,13 @@ public class AddOrderGuideActivity extends AppCompatActivity implements CustomSp
         //set spinner event listener
         iconSpinner.setSpinnerEventsListener(this);
         //store the initial icon to selectedIcon
-        selectedIcon = iconsList.get(iconSpinner.getSelectedItemPosition()).getImage();
+        selectedIcon = iconSpinner.getSelectedItemPosition();
 
         //on change listener for spinner when user selects icon
         iconSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedIcon = iconsList.get(iconSpinner.getSelectedItemPosition()).getImage();
+                selectedIcon = iconSpinner.getSelectedItemPosition();
             }
 
             @Override

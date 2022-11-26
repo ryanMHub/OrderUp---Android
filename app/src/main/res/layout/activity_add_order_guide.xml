@@ -102,7 +102,7 @@
         <EditText android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="15dp"
-                  android:textSize="20sp"
+                  android:textSize="18sp"
                   android:minWidth="180dp"
                   android:maxLines="1"
                   android:gravity="center"
@@ -121,7 +121,7 @@
           android:layout_marginTop="10dp"
           android:layout_marginBottom="0dp"/>
 
-
+    <!--This layout contains the spinner and label for the icon selector-->
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="5dp"
@@ -139,6 +139,7 @@
                   android:text="Select Icon - "/>
         <com.practice.practiceorderup01.CustomSpinner android:layout_width="wrap_content"
                                                       android:layout_height="wrap_content"
+                                                      android:layout_marginTop="5dp"
                                                       android:spinnerMode="dropdown"
                                                       android:layout_toRightOf="@id/iconSelectLabel"
                                                       android:layout_alignParentRight="true"

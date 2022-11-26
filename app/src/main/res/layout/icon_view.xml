@@ -14,8 +14,11 @@
               android:layout_height="wrap_content"
               android:id="@+id/nameHolder"
               android:text="Name"
-              android:layout_toRightOf="@+id/iconHolder"
+              android:textSize="20sp"
+              android:textStyle="bold"
+              android:layout_toEndOf="@+id/iconHolder"
               android:layout_centerVertical="true"
+              android:layout_centerHorizontal="true"
               android:layout_marginStart="8dp"/>
 
 </RelativeLayout>

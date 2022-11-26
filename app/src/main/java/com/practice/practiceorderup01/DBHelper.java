@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -27,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //if the icon director table does not exist create it
         if(!(tableExists(ICON_DIRECTOR))){
-            createIconDirector(ICON_DIRECTOR);
+            createIconDirector();
         }
 
         //Used for createing a test table when starting
@@ -80,15 +81,13 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //Adds the icon director table to the database
-    public boolean createIconDirector(String tableName){
-
-        tableName = "\"" + tableName +"\"";
+    public boolean createIconDirector(){
 
         //if the table already exists return false
-        if(tableExists(tableName)){
+        if(tableExists(ICON_DIRECTOR)){
             return false;
         } else{
-            String createTableStatement = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + TABLE_NAME + " TEXT PRIMARY KEY, " + ICON_ID + " INTEGER)";
+            String createTableStatement = "CREATE TABLE IF NOT EXISTS " + ICON_DIRECTOR + " (" + TABLE_NAME + " TEXT PRIMARY KEY, " + ICON_ID + " INTEGER)";
             SQLiteDatabase db = this.getWritableDatabase();
             db.execSQL(createTableStatement);
             return true;
@@ -127,6 +126,52 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    //return the index of the icon associated with the table name passed
+    public int getIconIndex(String tableKey){
+        tableKey = "\"" + tableKey +"\""; //wrap tableKey in quotations in case there is a space in the name
+
+        String queryString = "SELECT " + ICON_ID + " FROM " + ICON_DIRECTOR + " WHERE " + TABLE_NAME + " = " + tableKey;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        //retrieve data from db and store in cursor
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        //if a value was retrieved return. Else return 0
+        if(cursor.moveToFirst()){
+            return cursor.getInt(0);
+        } else{
+            return 0;
+        }
+
+    }
+
+    //returns all rows from ICON_DIRECTOR in an arraylist to its caller
+    public ArrayList<MenuItemList> getAllIconTableList(){
+
+        //this is the list that will store the values return from the query
+        ArrayList<MenuItemList> returnList = new ArrayList<MenuItemList>();
+
+        String query = "SELECT * FROM " + ICON_DIRECTOR;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query,null);
+
+        if(sqLiteDatabase == null || !(sqLiteDatabase.isOpen())){
+            return returnList;
+        }
+
+        if(cursor.moveToFirst()){
+            do{
+                returnList.add(new MenuItemList(cursor.getString(0),cursor.getInt(1)));
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return returnList;
+    }
+
     //Returns a list of items from the provided tablename
     public ArrayList<Item> getItemList(String tableName){
 
@@ -154,7 +199,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //Returns an array list with all the table names in the orderGuide database
     public ArrayList<String> getTableNames(){
         ArrayList<String> returnList = new ArrayList<>();
-        String query = "SELECT name FROM sqlite_master WHERE type='table' AND (name NOT LIKE 'sqlite_sequence' AND name NOT LIKE 'android_metadata')";
+        String query = "SELECT name FROM sqlite_master WHERE type='table' AND (name NOT LIKE 'sqlite_sequence' AND name NOT LIKE 'android_metadata' AND name NOT LIKE 'ICON_DIRECTOR')";
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -214,6 +259,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.close();
 
+    }
+
+    //this function will drop a row based on provided key
+    public void dropRowInIconDirector(String tableKey){
+
+        tableKey = "\"" + tableKey + "\"";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String statement = "DELETE FROM " + ICON_DIRECTOR + " WHERE " + TABLE_NAME + " = " + tableKey;
+
+        db.execSQL(statement);
+
+        db.close();
     }
 
     //commit changes to database
