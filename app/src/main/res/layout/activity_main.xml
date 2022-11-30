@@ -29,6 +29,7 @@
                   android:orientation="vertical"
                   android:layout_marginHorizontal="20dp"
                   android:layout_margin="10dp"
+                  android:layout_marginBottom="5dp"
                   app:layout_constraintTop_toBottomOf="@id/headerImage"
                   android:id="@+id/buttonHeader"
                   >
@@ -49,6 +50,8 @@
         <com.practice.practiceorderup01.CustomSpinner android:layout_width="match_parent"
                                                       android:layout_height="wrap_content"
                                                       android:layout_weight="1"
+                                                      android:layout_marginStart="10dp"
+                                                      android:layout_marginEnd="10dp"
                                                       android:spinnerMode="dropdown"
                                                       android:popupBackground="@drawable/spinner_popup_background"
                                                       android:layout_marginBottom="5dp"

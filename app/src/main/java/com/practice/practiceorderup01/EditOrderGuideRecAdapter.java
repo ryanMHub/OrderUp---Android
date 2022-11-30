@@ -49,20 +49,7 @@ public class EditOrderGuideRecAdapter extends RecyclerView.Adapter<EditOrderGuid
             holder.edtItemParEdit.setText(String.valueOf(editItemList.get(position).getPar()));
         }
 
-
-
-        /*
-        if(editItemList.get(position).getItemName().equals("Item Name") || editItemList.get(position).getItemName().trim().isEmpty()){
-            holder.edtItemNameEdit.setHint("Item Name"); //link item name by position in list
-        } else{
-            holder.edtItemNameEdit.setText(editItemList.get(position).getItemName()); //link item name by position in list
-        }
-
-        if(editItemList.get(position).getPar() == 0.0){
-            holder.edtItemParEdit.setHint(String.valueOf(editItemList.get(position).getPar()));
-        } else{
-            holder.edtItemParEdit.setText(String.valueOf(editItemList.get(position).getPar()));
-        }*/
+        if(position == getItemCount()-1) holder.edtItemNameEdit.requestFocus();
 
     }
 

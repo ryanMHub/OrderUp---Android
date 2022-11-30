@@ -1,10 +1,15 @@
 package com.practice.practiceorderup01;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +20,10 @@ public class AddOrderGuideActivity extends AppCompatActivity implements CustomSp
 
     //Todo: increase the appearance of the toasts
     //Todo: send a toast when creation is complete
+    //declares the main layout of the current activity
+    private ConstraintLayout mainLayout;
+    //declares header image view
+    private ImageView headerImage;
     //declares the connection to the OrderGuide name editText tag
     private EditText edtTableName;
 
@@ -44,6 +53,8 @@ public class AddOrderGuideActivity extends AppCompatActivity implements CustomSp
         btnCreateList = findViewById(R.id.btnSaveOrderGuideCreate);
         btnCancelCreate = findViewById(R.id.btnCancelCreate);
         iconSpinner = findViewById(R.id.iconSpinner);
+        mainLayout = findViewById(R.id.addMainLayout);
+        headerImage = findViewById(R.id.createHeaderImage);
 
         //initialize the database helper
         dbConnection = new DBHelper(this);
@@ -93,7 +104,7 @@ public class AddOrderGuideActivity extends AppCompatActivity implements CustomSp
         });
 
         //Todo: Add items that are not used do not include in table currently databases has error when left empty
-
+        //add a new item to the potential table
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,25 +115,31 @@ public class AddOrderGuideActivity extends AppCompatActivity implements CustomSp
             }
         });
 
-
+        //creates the table with the data that the user enters
         btnCreateList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //check if there is a value in the edittext box for the table if the space is empty
                 if(edtTableName.getText().toString().trim().isEmpty()){
-                    Toast.makeText(AddOrderGuideActivity.this, "Order Guide Name Required", Toast.LENGTH_SHORT).show();
-                } else if(dbConnection.tableExists(edtTableName.getText().toString())) {
-                    Toast.makeText(AddOrderGuideActivity.this, "Order Guide Name Unavailable", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AddOrderGuideActivity.this, "Order Guide Name Required", Toast.LENGTH_SHORT).show();
+                    CustomSnackBar.ShowSnackBar(AddOrderGuideActivity.this, mainLayout, "Order Guide Name Required", R.drawable.wrongred);
+                } else if(dbConnection.tableExists(edtTableName.getText().toString().trim())) {
+                    //Toast.makeText(AddOrderGuideActivity.this, "Order Guide Name Unavailable", Toast.LENGTH_SHORT).show();
+                    CustomSnackBar.ShowSnackBar(AddOrderGuideActivity.this, mainLayout, "Order Guide Name Unavailable", R.drawable.wrongred);
                 } else{
                     //create a table based on the name provided by the user
-                    dbConnection.createOrderGuideTable(edtTableName.getText().toString()); //Todo: add a toast to tell user if there was an error
+                    dbConnection.createOrderGuideTable(edtTableName.getText().toString().trim());
+                        //Todo: add a toast to tell user if there was an error
 
                     //loop through the newItemList and insert each item into new table
                     for(Item item : newItemList){
-                        dbConnection.onAdd(item, edtTableName.getText().toString());
+                        dbConnection.onAdd(item, edtTableName.getText().toString().trim());
                     }
 
-                    dbConnection.addIconDirectorEntry(edtTableName.getText().toString(), selectedIcon);
+                    dbConnection.addIconDirectorEntry(edtTableName.getText().toString().trim(), selectedIcon);
+
+                    //Todo: Verify that this is true
+                    CustomSnackBar.ShowSnackBar(AddOrderGuideActivity.this, mainLayout, "Order Guide " + edtTableName.getText().toString().trim(), R.drawable.rightblue);
 
                     Intent intent = new Intent(AddOrderGuideActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -141,9 +158,35 @@ public class AddOrderGuideActivity extends AppCompatActivity implements CustomSp
                 finish();
             }
         });
+
+        //listen for a change in the size of the main layout when the keyboard opens
+        mainLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                //this will be used to determine if the size of the layout has changed
+                Rect currentVisible = new Rect();
+                mainLayout.getWindowVisibleDisplayFrame(currentVisible);
+
+                //create a Constraint set for the main constraint layout allows you to alter the percentage of tags in layout
+                ConstraintSet set = new ConstraintSet();
+                set.clone(mainLayout);
+
+                //determine if the keyboard has been opened or closed
+                int heightDiff = mainLayout.getRootView().getHeight() - currentVisible.height();
+                if(heightDiff > .25*mainLayout.getRootView().getHeight()){
+                    set.constrainPercentHeight(R.id.layoutRecCreate, .33f);
+                    set.applyTo(mainLayout);
+                    headerImage.setVisibility(View.GONE);
+                } else{
+                    set.constrainPercentHeight(R.id.layoutRecCreate, .44f);
+                    set.applyTo(mainLayout);
+                    headerImage.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
-    //overide the back button
+    //override the back button
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(AddOrderGuideActivity.this, MainActivity.class);

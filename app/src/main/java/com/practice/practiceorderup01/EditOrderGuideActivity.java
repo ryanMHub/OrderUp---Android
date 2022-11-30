@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,8 @@ public class EditOrderGuideActivity extends AppCompatActivity implements CustomS
     //Todo: Add hint instead of text to text boxes and par boxes
     //Todo: Create exception for when there is no value in par edt box
     //Todo: add a toast when the edit is complete, custom fix the delete and the add
+    //declare tag for main layout
+    private ConstraintLayout mainLayout;
     //declare tags from activity_edit_order_guide
     private EditText edtOrderGuideName;
     private Button btnAddItem;
@@ -51,6 +54,7 @@ public class EditOrderGuideActivity extends AppCompatActivity implements CustomS
         btnCancel = findViewById(R.id.btnCancelEdit);
         orderGuideRec = findViewById(R.id.editListRec);
         iconSpinner = findViewById(R.id.iconSpinner);
+        mainLayout = findViewById(R.id.editMainLayout);
 
         //initialize database connection
         dbConnection = new DBHelper(this);
@@ -111,22 +115,29 @@ public class EditOrderGuideActivity extends AppCompatActivity implements CustomS
             public void onClick(View view) {
 
                 if(edtOrderGuideName.getText().toString().trim().isEmpty()){
-                    Toast.makeText(EditOrderGuideActivity.this, "Order Guide Name Required", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(EditOrderGuideActivity.this, "Order Guide Name Required", Toast.LENGTH_SHORT).show();
+                    CustomSnackBar.ShowSnackBar(EditOrderGuideActivity.this, mainLayout, "Order Guide Name Required", R.drawable.wrongred);
+                } else if(dbConnection.tableExists(edtOrderGuideName.getText().toString().trim())) {
+                    //Toast.makeText(AddOrderGuideActivity.this, "Order Guide Name Unavailable", Toast.LENGTH_SHORT).show();
+                    CustomSnackBar.ShowSnackBar(EditOrderGuideActivity.this, mainLayout, "Order Guide Name Unavailable", R.drawable.wrongred);
                 } else{
                     //drop the original table in the database, and it's associated icon from ICON_DIRECTOR
                     dbConnection.dropTable(tableName);
                     dbConnection.dropRowInIconDirector(tableName);
 
                     //create the new table
-                    dbConnection.createOrderGuideTable(edtOrderGuideName.getText().toString());
+                    dbConnection.createOrderGuideTable(edtOrderGuideName.getText().toString().trim());
 
                     //loop through the editTableList adding each item to the new table
                     for(Item item : editItemList){
-                        dbConnection.onAdd(item, edtOrderGuideName.getText().toString());
+                        dbConnection.onAdd(item, edtOrderGuideName.getText().toString().trim());
                     }
 
                     //add entry in ICON_DIRECTOR for this table
-                    dbConnection.addIconDirectorEntry(edtOrderGuideName.getText().toString(), selectedIcon);
+                    dbConnection.addIconDirectorEntry(edtOrderGuideName.getText().toString().trim(), selectedIcon);
+
+                    //Todo: Verify that this is true
+                    CustomSnackBar.ShowSnackBar(EditOrderGuideActivity.this, mainLayout, "Order Guide " + edtOrderGuideName.getText().toString().trim(), R.drawable.rightblue);
 
                     //return to main activity
                     Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);

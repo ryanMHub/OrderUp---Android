@@ -113,7 +113,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //creates a table in the database based on the name provided by the user
     public boolean createOrderGuideTable(String tableName){
-
+        //todo: modify so that if the execSQL fails false is returned
         tableName = "\"" + tableName +"\"";
         //if the table already exists return false
         if(tableExists(tableName)){
