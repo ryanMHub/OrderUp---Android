@@ -1,11 +1,14 @@
 package com.practice.practiceorderup01;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,8 +19,11 @@ public class EditOrderGuideActivity extends AppCompatActivity implements CustomS
     //Todo: Add hint instead of text to text boxes and par boxes
     //Todo: Create exception for when there is no value in par edt box
     //Todo: add a toast when the edit is complete, custom fix the delete and the add
+    //Todo: Set the cursor to the tablename after loading
     //declare tag for main layout
     private ConstraintLayout mainLayout;
+    //declares header image view
+    private ImageView headerImage;
     //declare tags from activity_edit_order_guide
     private EditText edtOrderGuideName;
     private Button btnAddItem;
@@ -55,6 +61,7 @@ public class EditOrderGuideActivity extends AppCompatActivity implements CustomS
         orderGuideRec = findViewById(R.id.editListRec);
         iconSpinner = findViewById(R.id.iconSpinner);
         mainLayout = findViewById(R.id.editMainLayout);
+        headerImage = findViewById(R.id.editHeaderImage);
 
         //initialize database connection
         dbConnection = new DBHelper(this);
@@ -87,7 +94,6 @@ public class EditOrderGuideActivity extends AppCompatActivity implements CustomS
 
         //set the text to the order guide name selected
         edtOrderGuideName.setText(tableName);
-
 
         //obtain list from the database based on table determined from user
         editItemList = dbConnection.getItemList(tableName);
@@ -154,6 +160,32 @@ public class EditOrderGuideActivity extends AppCompatActivity implements CustomS
                 Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        //listen for a change in the size of the main layout when the keyboard opens
+        mainLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                //this will be used to determine if the size of the layout has changed
+                Rect currentVisible = new Rect();
+                mainLayout.getWindowVisibleDisplayFrame(currentVisible);
+
+                //create a Constraint set for the main constraint layout allows you to alter the percentage of tags in layout
+                ConstraintSet set = new ConstraintSet();
+                set.clone(mainLayout);
+
+                //determine if the keyboard has been opened or closed
+                int heightDiff = mainLayout.getRootView().getHeight() - currentVisible.height();
+                if(heightDiff > .25*mainLayout.getRootView().getHeight()){
+                    set.constrainPercentHeight(R.id.layoutRecEdit, .33f);
+                    set.applyTo(mainLayout);
+                    headerImage.setVisibility(View.GONE);
+                } else{
+                    set.constrainPercentHeight(R.id.layoutRecEdit, .44f);
+                    set.applyTo(mainLayout);
+                    headerImage.setVisibility(View.VISIBLE);
+                }
             }
         });
 

@@ -1,5 +1,5 @@
 package com.practice.practiceorderup01;
-
+//Todo:Not currently using double check before delete
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
