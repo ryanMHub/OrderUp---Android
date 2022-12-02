@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple android:color="@color/white" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <selector>
+            <item android:drawable="@drawable/button_gradient_redgray2" android:state_pressed="true"/>
+            <item>
+                <layer-list>
+                    <item>
+                        <shape android:shape="rectangle">
+                            <corners
+                                    android:radius="30dp"
+                            />
+                            <gradient
+                                    android:angle="90"
+                                    android:centerX="50%"
+                                    android:centerColor="@color/trans_parent"
+                                    android:startColor="#8BC34A"
+                                    android:endColor="#8BC34A"
+                                    android:type="linear"
+                            />
+                            <padding
+                                    android:left="0dp"
+                                    android:top="0dp"
+                                    android:right="0dp"
+                                    android:bottom="0dp"
+                            />
+                            <size
+                                    android:width="270dp"
+                                    android:height="60dp"
+                            />
+                            <stroke
+                                    android:width="2.5dp"
+                                    android:color="#FFEB3B"
+                            />
+                        </shape>
+                    </item>
+                    <item android:bottom="5dp" android:left="6dp" android:right="10dp" android:top="5dp">
+                        <shape android:shape="rectangle">
+                            <corners
+                                    android:radius="30dp"
+                            />
+                            <gradient
+                                    android:angle="90"
+                                    android:centerX="50%"
+                                    android:centerColor="@color/trans_parent"
+                                    android:startColor="#CDDC39"
+                                    android:endColor="#CDDC39"
+                                    android:type="linear"
+                            />
+                            <padding
+                                    android:left="0dp"
+                                    android:top="0dp"
+                                    android:right="0dp"
+                                    android:bottom="0dp"
+                            />
+                            <size
+                                    android:width="270dp"
+                                    android:height="60dp"
+                            />
+                            <stroke
+                                    android:width="2.5dp"
+                                    android:color="#FF9800"
+                            />
+                        </shape>
+                    </item>
+                </layer-list>
+            </item>
+        </selector>
+    </item>
+</ripple>

@@ -131,7 +131,7 @@ public class EditOrderGuideActivity extends AppCompatActivity implements CustomS
                 dbConnection.addIconDirectorEntry(edtOrderGuideName.getText().toString().trim(), selectedIcon);
 
                 //Todo: Verify that this is true
-                CustomSnackBar.ShowSnackBar(EditOrderGuideActivity.this, mainLayout, "Order Guide " + edtOrderGuideName.getText().toString().trim(), R.drawable.rightblue);
+                Toast.makeText(this, edtOrderGuideName.getText().toString().trim() + " Order Guide Was Created", Toast.LENGTH_SHORT).show();
 
                 //return to main activity
                 Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
