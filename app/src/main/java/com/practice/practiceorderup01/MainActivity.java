@@ -1,38 +1,34 @@
 package com.practice.practiceorderup01;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements CustomSpinner.OnSpinnerEventsListener{
 
-
+    //Todo: Reorganize all files into a different structure
     private enum Action { //enum is used to switch which activity to execute when dealing with existing order guides
         View(ViewOrderGuideActivity.class),
         Process(OrderListActivity.class),
         Delete(DeleteOrderGuideActivity.class),
         Edit(EditOrderGuideActivity.class);
 
-        Class className;
+        final Class className;
 
-        Action(Class className){
+        Action(final Class className){
             this.className = className;
         }
     }
 
-    //Todo:Enhance the spinner design
     //declare spinners
     private CustomSpinner spinnerOrderGuides;
     private IconAdapter iconAdapter; //will adapt the icons list to the spinner
-    private ArrayList<MenuItemList> orderGuides; //array to store all the table names  and icon indexs in table ICON_DIRECTOR*
+    private ArrayList<MenuItemList> orderGuides; //array to store all the table names  and icon indexes in table ICON_DIRECTOR*
 
     //Declare the database connection
     private DBHelper dbConnection;
@@ -57,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements CustomSpinner.OnS
         //create a connection to the database with this activity
         dbConnection = new DBHelper(this);
 
-        //links to the spinner on activity_main that displays the tablenames in the orderGuide database
+        //links to the spinner on activity_main that displays the table names in the orderGuide database
         spinnerOrderGuides = findViewById(R.id.spinnerOrderGuides);
 
         //Arraylist contains the table names to be used in the orderGuide spinner in activity_main.xml
@@ -92,60 +88,28 @@ public class MainActivity extends AppCompatActivity implements CustomSpinner.OnS
         deleteOrderBtn = findViewById(R.id.deleteOrderButton);
 
         //Create Order Guide button will execute AddOrderGuideActivity
-        createOrderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddOrderGuideActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        createOrderBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, AddOrderGuideActivity.class);
+            startActivity(intent);
+            finish();
         });
 
         //View Order Guide executes ViewOrderGuideActivity
-        viewOrderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                executeActivity(Action.View);
-            }
-        });
+        viewOrderBtn.setOnClickListener(view -> executeActivity(Action.View));
 
-        //Todo: Do I need to add a fail safe if no table is selected ? Automatically have a table selected
         //Process Order Button will execute OrderListActivity
-        processOrderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                executeActivity(Action.Process);
-            }
-        });
+        processOrderBtn.setOnClickListener(view -> executeActivity(Action.Process));
 
         //Edit Order Button executes EditOrderGuideActivity
-        editOrderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                executeActivity(Action.Edit);
-            }
-        });
+        editOrderBtn.setOnClickListener(view -> executeActivity(Action.Edit));
 
         //Delete Order Guide Button executes DeleteOrderGuideActivity
-        deleteOrderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                executeActivity(Action.Delete);
-            }
-        });
+        deleteOrderBtn.setOnClickListener(view -> executeActivity(Action.Delete));
 
 
     }
 
-    //tODO: restart or resume which one should handle this action
-    /*@Override
-    protected void onResume(){
-        super.onResume();
-        orderGuides = dbConnection.getTableNames();
-        tableNameAdapter.notifyDataSetChanged();
-        spinnerOrderGuides.setAdapter(tableNameAdapter);
-    }*/
-
+    //this function is used to execute an activity based of the enum passed
     private void executeActivity(Action action){
 
         if(dbConnection.tableExists(tableName)){
@@ -154,17 +118,20 @@ public class MainActivity extends AppCompatActivity implements CustomSpinner.OnS
             startActivity(intentDeleteOrderGuide);
             finish();
         } else{
+            //Todo: Snackbar
             Toast.makeText(this, "Order Guide Does not Exist", Toast.LENGTH_SHORT).show();
         }
     }
 
     //action to be taken when spinner is open
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onPopupWindowOpened(Spinner spinner) {
         spinnerOrderGuides.setBackground(getDrawable(R.drawable.bg_spinner_icon_up));
     }
 
     //action to be taken when spinner closed
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onPopupWindowClosed(Spinner spinner) {
         spinnerOrderGuides.setBackground(getDrawable(R.drawable.bg_spinner_icon));

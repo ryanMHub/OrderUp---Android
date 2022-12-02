@@ -1,7 +1,6 @@
 package com.practice.practiceorderup01;
 
 import android.content.Intent;
-import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,17 +49,14 @@ public class ViewOrderGuideActivity extends AppCompatActivity {
         orderListRec.setLayoutManager(new GridLayoutManager(this,1));
 
         //On button click for main button
-        mainMenuBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ViewOrderGuideActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        mainMenuBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(ViewOrderGuideActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
-    //overide the back button
+    //override the back button
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(ViewOrderGuideActivity.this, MainActivity.class);

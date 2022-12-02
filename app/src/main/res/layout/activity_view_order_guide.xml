@@ -95,7 +95,7 @@
                                            android:layout_height="0dp"
                                            android:gravity="center"
                                            android:layout_marginTop="20dp"
-                                           app:layout_constraintHeight_percent=".58"
+                                           app:layout_constraintHeight_percent=".55"
                                            android:id="@+id/scrollForRecProcessView"
                                            android:layout_centerHorizontal="true"
                                            app:layout_constraintTop_toBottomOf="@id/labelLayoutView"

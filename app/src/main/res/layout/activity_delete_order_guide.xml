@@ -87,7 +87,7 @@
               app:layout_constraintTop_toBottomOf="@id/message01"
               android:id="@+id/txtTableName"
               android:textSize="30sp"
-              android:text="Dog Bone"/>
+              android:text="@string/delGuidePlaceholder"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

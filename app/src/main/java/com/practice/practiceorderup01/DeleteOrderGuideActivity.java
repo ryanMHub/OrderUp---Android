@@ -1,7 +1,6 @@
 package com.practice.practiceorderup01;
 
 import android.content.Intent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,30 +42,24 @@ public class DeleteOrderGuideActivity extends AppCompatActivity {
         txtTableName.setText(currentTable);
 
         //access database and delete table when clicked
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dbConnection.dropRowInIconDirector(currentTable);
-                dbConnection.dropTable(currentTable);
-                Toast.makeText(DeleteOrderGuideActivity.this, currentTable + " Has Been Delete", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(DeleteOrderGuideActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        btnDelete.setOnClickListener(view -> {
+            dbConnection.dropRowInIconDirector(currentTable);
+            dbConnection.dropTable(currentTable);
+            Toast.makeText(DeleteOrderGuideActivity.this, currentTable + " Has Been Delete", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(DeleteOrderGuideActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
-        //cancel the delete and return to main activity
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DeleteOrderGuideActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        //cancel the delete action and return to main activity
+        btnCancel.setOnClickListener(view -> {
+            Intent intent = new Intent(DeleteOrderGuideActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
-    //overide the back button
+    //override the back button
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(DeleteOrderGuideActivity.this, MainActivity.class);

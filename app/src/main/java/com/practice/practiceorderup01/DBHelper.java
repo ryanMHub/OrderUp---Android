@@ -5,11 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -31,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
             createIconDirector();
         }
 
-        //Used for createing a test table when starting
+        //Used for creating a test table when starting
         /*
         if(!(tableExists(ORDER_TABLE))){
             buildTestTable();
@@ -50,7 +47,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //this method will create an item in the table of choice
-    //Todo:maybe create error checking a bypass system with a long of rejections
     public boolean onAdd(Item item, String tableName){
 
         tableName = "\"" + tableName +"\"";
@@ -61,11 +57,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(ITEM_PAR, item.getPar());
 
         long insert = db.insert(tableName, null, cv);
-        if(insert == -1){
-            return false;
-        }else{
-            return true;
-        }
+        return insert != -1;
     }
 
     //builds a test table
@@ -100,15 +92,13 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
+        //link data values to their column name
         cv.put(TABLE_NAME, tableKey);
         cv.put(ICON_ID, iconID);
 
+        //inserts the values in to the table given returns a value that will determine if it was successful
         long insert = db.insert(ICON_DIRECTOR, null, cv);
-        if(insert == -1){
-            return false;
-        }else{
-            return true;
-        }
+        return insert != -1;
     }
 
     //creates a table in the database based on the name provided by the user
@@ -119,6 +109,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if(tableExists(tableName)){
             return false;
         } else{
+            //Todo: Place in a try block
             String createTableStatement = "CREATE TABLE IF NOT EXISTS " + tableName + " (" + ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ITEM_NAME + " TEXT, " + ITEM_PAR + " REAL)";
             SQLiteDatabase db = this.getWritableDatabase();
             db.execSQL(createTableStatement);
@@ -134,14 +125,15 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         //retrieve data from db and store in cursor
-        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
-
         //if a value was retrieved return. Else return 0
-        if(cursor.moveToFirst()){
-            return cursor.getInt(0);
-        } else{
-            return 0;
+        try (Cursor cursor = sqLiteDatabase.rawQuery(queryString, null)) {
+            if (cursor.moveToFirst()) {
+                return cursor.getInt(0);
+            } else {
+                return 0;
+            }
         }
+
 
     }
 
@@ -149,14 +141,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<MenuItemList> getAllIconTableList(){
 
         //this is the list that will store the values return from the query
-        ArrayList<MenuItemList> returnList = new ArrayList<MenuItemList>();
+        ArrayList<MenuItemList> returnList = new ArrayList<>();
 
         String query = "SELECT * FROM " + ICON_DIRECTOR;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         Cursor cursor = sqLiteDatabase.rawQuery(query,null);
 
-        if(sqLiteDatabase == null || !(sqLiteDatabase.isOpen())){
+        if(!(sqLiteDatabase.isOpen())){
             return returnList;
         }
 
@@ -172,7 +164,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    //Returns a list of items from the provided tablename
+    //Returns a list of items from the provided table name
     public ArrayList<Item> getItemList(String tableName){
 
         tableName = "\"" + tableName +"\""; //add quotations around the table names to protect from white space errors
@@ -187,8 +179,6 @@ public class DBHelper extends SQLiteOpenHelper {
             do{
                 returnList.add(new Item(cursor.getString(1), cursor.getDouble(2) ));
             }while (cursor.moveToNext());
-        }else{
-            //will return empty list. Todo:What should I do here
         }
 
         cursor.close();
@@ -274,17 +264,4 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.close();
     }
-
-    //commit changes to database
-    public void commitDataChanges(){
-
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String statement = "COMMIT";
-
-        db.execSQL(statement);
-        db.close();
-    }
-
-    //Todo: check if item exists method
 }

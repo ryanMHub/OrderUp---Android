@@ -1,9 +1,9 @@
 package com.practice.practiceorderup01;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditOrderGuideActivity extends AppCompatActivity implements CustomSpinner.OnSpinnerEventsListener {
-    //Todo: Add hint instead of text to text boxes and par boxes
-    //Todo: Create exception for when there is no value in par edt box
-    //Todo: add a toast when the edit is complete, custom fix the delete and the add
-    //Todo: Set the cursor to the tablename after loading
     //declare tag for main layout
     private ConstraintLayout mainLayout;
     //declares header image view
@@ -105,87 +101,72 @@ public class EditOrderGuideActivity extends AppCompatActivity implements CustomS
         orderGuideRec.setLayoutManager(new GridLayoutManager(this,1));
 
         //add item to the order guide
-        btnAddItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editItemList.add(new Item("Item Name", 0.0));
-                adapter.notifyItemInserted(editItemList.size()-1);
-                adapter.notifyItemRangeChanged(0,editItemList.size());
-                adapter.notifyDataSetChanged();
-            }
+        btnAddItem.setOnClickListener(view -> {
+            editItemList.add(new Item("Item Name", 0.0));
+            adapter.notifyItemInserted(editItemList.size()-1);
+            adapter.notifyItemRangeChanged(0,editItemList.size());
+            adapter.notifyDataSetChanged();
         });
 
         //when the save changes button is clicked the original table will be dropped. And then the new table will be created based on the information
-        btnSaveChanges.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnSaveChanges.setOnClickListener(view -> {
 
-                if(edtOrderGuideName.getText().toString().trim().isEmpty()){
-                    //Toast.makeText(EditOrderGuideActivity.this, "Order Guide Name Required", Toast.LENGTH_SHORT).show();
-                    CustomSnackBar.ShowSnackBar(EditOrderGuideActivity.this, mainLayout, "Order Guide Name Required", R.drawable.wrongred);
-                } else if(dbConnection.tableExists(edtOrderGuideName.getText().toString().trim())) {
-                    //Toast.makeText(AddOrderGuideActivity.this, "Order Guide Name Unavailable", Toast.LENGTH_SHORT).show();
-                    CustomSnackBar.ShowSnackBar(EditOrderGuideActivity.this, mainLayout, "Order Guide Name Unavailable", R.drawable.wrongred);
-                } else{
-                    //drop the original table in the database, and it's associated icon from ICON_DIRECTOR
-                    dbConnection.dropTable(tableName);
-                    dbConnection.dropRowInIconDirector(tableName);
+            if(edtOrderGuideName.getText().toString().trim().isEmpty()){
+                //Toast.makeText(EditOrderGuideActivity.this, "Order Guide Name Required", Toast.LENGTH_SHORT).show();
+                CustomSnackBar.ShowSnackBar(EditOrderGuideActivity.this, mainLayout, "Order Guide Name Required", R.drawable.wrongred);
+            } else{
+                //drop the original table in the database, and it's associated icon from ICON_DIRECTOR
+                dbConnection.dropTable(tableName);
+                dbConnection.dropRowInIconDirector(tableName);
 
-                    //create the new table
-                    dbConnection.createOrderGuideTable(edtOrderGuideName.getText().toString().trim());
-
-                    //loop through the editTableList adding each item to the new table
-                    for(Item item : editItemList){
-                        dbConnection.onAdd(item, edtOrderGuideName.getText().toString().trim());
-                    }
-
-                    //add entry in ICON_DIRECTOR for this table
-                    dbConnection.addIconDirectorEntry(edtOrderGuideName.getText().toString().trim(), selectedIcon);
-
-                    //Todo: Verify that this is true
-                    CustomSnackBar.ShowSnackBar(EditOrderGuideActivity.this, mainLayout, "Order Guide " + edtOrderGuideName.getText().toString().trim(), R.drawable.rightblue);
-
-                    //return to main activity
-                    Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                //create the new table
+                dbConnection.createOrderGuideTable(edtOrderGuideName.getText().toString().trim());
+                //Todo: check if failure to add item
+                //loop through the editTableList adding each item to the new table
+                for(Item item : editItemList){
+                    dbConnection.onAdd(item, edtOrderGuideName.getText().toString().trim());
                 }
-            }
-        });
 
-        //action taken when cancel button is pressed return to main activity
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                //add entry in ICON_DIRECTOR for this table
+                dbConnection.addIconDirectorEntry(edtOrderGuideName.getText().toString().trim(), selectedIcon);
+
+                //Todo: Verify that this is true
+                CustomSnackBar.ShowSnackBar(EditOrderGuideActivity.this, mainLayout, "Order Guide " + edtOrderGuideName.getText().toString().trim(), R.drawable.rightblue);
+
+                //return to main activity
                 Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
+        //action taken when cancel button is pressed return to main activity
+        btnCancel.setOnClickListener(view -> {
+            Intent intent = new Intent(EditOrderGuideActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         //listen for a change in the size of the main layout when the keyboard opens
-        mainLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                //this will be used to determine if the size of the layout has changed
-                Rect currentVisible = new Rect();
-                mainLayout.getWindowVisibleDisplayFrame(currentVisible);
+        mainLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            //this will be used to determine if the size of the layout has changed
+            Rect currentVisible = new Rect();
+            mainLayout.getWindowVisibleDisplayFrame(currentVisible);
 
-                //create a Constraint set for the main constraint layout allows you to alter the percentage of tags in layout
-                ConstraintSet set = new ConstraintSet();
-                set.clone(mainLayout);
+            //create a Constraint set for the main constraint layout allows you to alter the percentage of tags in layout
+            ConstraintSet set = new ConstraintSet();
+            set.clone(mainLayout);
 
-                //determine if the keyboard has been opened or closed
-                int heightDiff = mainLayout.getRootView().getHeight() - currentVisible.height();
-                if(heightDiff > .25*mainLayout.getRootView().getHeight()){
-                    set.constrainPercentHeight(R.id.layoutRecEdit, .33f);
-                    set.applyTo(mainLayout);
-                    headerImage.setVisibility(View.GONE);
-                } else{
-                    set.constrainPercentHeight(R.id.layoutRecEdit, .44f);
-                    set.applyTo(mainLayout);
-                    headerImage.setVisibility(View.VISIBLE);
-                }
+            //determine if the keyboard has been opened or closed
+            int heightDiff = mainLayout.getRootView().getHeight() - currentVisible.height();
+            if(heightDiff > .25*mainLayout.getRootView().getHeight()){
+                set.constrainPercentHeight(R.id.layoutRecEdit, .33f);
+                set.applyTo(mainLayout);
+                headerImage.setVisibility(View.GONE);
+            } else{
+                set.constrainPercentHeight(R.id.layoutRecEdit, .44f);
+                set.applyTo(mainLayout);
+                headerImage.setVisibility(View.VISIBLE);
             }
         });
 
@@ -200,12 +181,14 @@ public class EditOrderGuideActivity extends AppCompatActivity implements CustomS
     }
 
     //action to be taken when spinner is open
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onPopupWindowOpened(Spinner spinner) {
         iconSpinner.setBackground(getDrawable(R.drawable.bg_spinner_icon_up));
     }
 
     //action to be taken when spinner closed
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onPopupWindowClosed(Spinner spinner) {
         iconSpinner.setBackground(getDrawable(R.drawable.bg_spinner_icon));

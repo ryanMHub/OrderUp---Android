@@ -1,17 +1,25 @@
 package com.practice.practiceorderup01;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class OrderListActivity extends AppCompatActivity {
+    //declares the main layout of the current activity
+    private ConstraintLayout mainLayout;
+    //declares header image view
+    private ImageView headerImage;
     //declare DBHelper object
     private DBHelper dbConnection;
 
@@ -41,6 +49,8 @@ public class OrderListActivity extends AppCompatActivity {
         orderListRec = findViewById(R.id.orderListRec);
         processListButton = findViewById(R.id.submitOrderButton);
         qtyLabel = findViewById(R.id.qtyLabel);
+        mainLayout = findViewById(R.id.orderListMainLayout);
+        headerImage = findViewById(R.id.processHeaderImage);
 
         //create an arraylist with the items in the table selected
         ArrayList<Item> items = dbConnection.getItemList(currentTable);
@@ -56,18 +66,38 @@ public class OrderListActivity extends AppCompatActivity {
         orderListRec.setLayoutManager(new GridLayoutManager(this,1));
 
         //On button click for main button
-        processListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //the if isResult is used as a flag wether the order list adapter
-                //or order results adapter
-                if(isResults){
-                    Intent intent = new Intent(OrderListActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else{
-                    showResults(resultsAdapter);
-                }
+        processListButton.setOnClickListener(view -> {
+            //the if isResult is used as a flag whether the order list adapter
+            //or order results adapter
+            if(isResults){
+                Intent intent = new Intent(OrderListActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }else{
+                showResults(resultsAdapter);
+            }
+        });
+
+        //listen for a change in the size of the main layout when the keyboard opens
+        mainLayout.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            //this will be used to determine if the size of the layout has changed
+            Rect currentVisible = new Rect();
+            mainLayout.getWindowVisibleDisplayFrame(currentVisible);
+
+            //create a Constraint set for the main constraint layout allows you to alter the percentage of tags in layout
+            ConstraintSet set = new ConstraintSet();
+            set.clone(mainLayout);
+
+            //determine if the keyboard has been opened or closed
+            int heightDiff = mainLayout.getRootView().getHeight() - currentVisible.height();
+            if(heightDiff > .25*mainLayout.getRootView().getHeight()){
+                set.constrainPercentHeight(R.id.scrollForRecProcess, .69f);
+                set.applyTo(mainLayout);
+                headerImage.setVisibility(View.GONE);
+            } else{
+                set.constrainPercentHeight(R.id.scrollForRecProcess, .55f);
+                set.applyTo(mainLayout);
+                headerImage.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -80,7 +110,7 @@ public class OrderListActivity extends AppCompatActivity {
         isResults = true;
     }
 
-    //overide the back button
+    //override the back button
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(OrderListActivity.this, MainActivity.class);

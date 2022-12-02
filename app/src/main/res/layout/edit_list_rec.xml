@@ -7,16 +7,16 @@
     <!-- Delete Item Button -->
     <Button android:layout_width="35dp"
             android:layout_gravity="center"
-            android:text="x"
+            android:text="@string/xDelBtn"
             android:textStyle="bold"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:layout_marginTop="2.5dp"
             android:layout_marginBottom="2.5dp"
             android:textColor="@color/beigeAccentDark"
             android:layout_height="35dp"
             android:id="@+id/btnDeleteItemEdit"
             style="@style/BlueButton"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginStart="15dp"/>
 
     <!-- item name edit text tag-->
     <EditText android:layout_width="0dp"
@@ -24,9 +24,12 @@
               android:layout_weight="1"
               android:layout_marginTop="2.5dp"
               android:layout_marginBottom="2.5dp"
+              android:hint="@string/itemNameLabel"
               android:id="@+id/edtItemNameEdit"
+              android:importantForAutofill="no"
+              android:inputType="text"
               android:maxLines="1"
-              android:layout_marginLeft="15dp"/>
+              android:layout_marginStart="15dp"/>
 
     <!-- item par level edit text tag -->
     <EditText android:layout_width="60dp"
@@ -35,9 +38,11 @@
               android:layout_marginBottom="2.5dp"
               android:id="@+id/edtItemParEdit"
               android:textAlignment="textEnd"
+              android:hint="@string/zeroPlaceHolder"
+              android:importantForAutofill="no"
               android:inputType="numberDecimal"
               android:maxLines="1"
               android:layout_marginEnd="7dp"
-              android:layout_marginLeft="15dp"/>
+              android:layout_marginStart="15dp"/>
 
 </LinearLayout>

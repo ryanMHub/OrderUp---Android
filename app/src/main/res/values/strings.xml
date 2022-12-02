@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Order Up</string>
 
-
     <!-- spinner labels -->
     <string name="orderGuideSelectionLabel">Select the Order Guide</string>
     <string name="actionOptionLabel">Select Action Option</string>
+    <string name="iconSpinnerLabel">Select Icon -</string>
+    <string name="iconNamePlaceholder">Name</string>
 
     <!-- buttons -->
     <string name="addNewOrderGuide">*Add New Order Guide*</string>
@@ -17,6 +18,8 @@
     <string name="selectTableButton">Select Table</string>
     <string name="addNewItem">Add Item</string>
     <string name="saveOrderGuide">Save</string>
+    <string name="okBtn">OK</string>
+    <string name="xDelBtn">x</string>
 
     <!-- Header Labels -->
     <string name="editOrderGuideHeader">Edit Order Guide</string>
@@ -29,6 +32,13 @@
     <string name="orderQty">Order Qty</string>
     <string name="deleteItemLabel">Del</string>
     <string name="orderGuideName">Order Guide Name:</string>
+
+
+    <!--Hints-->
+    <string name="orderNameHint">Order Guide</string>
+    <string name="zeroPlaceHolder">0</string>
+    <string name="delGuidePlaceholder">Dog Bone</string>
+    <string name="itemPlaceHolder">Item in order-------------------------------------</string>
 
     <!--Delete order guide activity strings-->
     <string name="checkDeleteMsg">Are you sure you would like to delete this order guide?</string>

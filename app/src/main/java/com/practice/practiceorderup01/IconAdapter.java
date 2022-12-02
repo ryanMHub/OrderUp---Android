@@ -12,8 +12,8 @@ import java.util.List;
 
 public class IconAdapter  extends BaseAdapter {
 
-    private Context context;
-    private List<Icons> iconsList;
+    private final Context context;
+    private final List<Icons> iconsList;
 
     //constructor will create adapter with provide context and icons list
     public IconAdapter(Context context, List<Icons> iconsList){

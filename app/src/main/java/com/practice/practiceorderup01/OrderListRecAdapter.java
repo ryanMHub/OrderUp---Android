@@ -24,8 +24,7 @@ public class OrderListRecAdapter extends RecyclerView.Adapter<OrderListRecAdapte
     @Override //creates a new order_list_item.xml for each item in the array
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_list_item, parent, false);
-        ViewHolder holder = new ViewHolder(view); //Create the inner object with the view that was created above
-        return holder; //return holder
+        return new ViewHolder(view); //return holder
     }
 
     //bind each item name to the text box in order_list_item.xml
@@ -43,7 +42,7 @@ public class OrderListRecAdapter extends RecyclerView.Adapter<OrderListRecAdapte
     //pass the reference of the main array to the adapter
     public void setItemsList(ArrayList<Item> items){
         this.items = items;
-        notifyDataSetChanged(); //refresh the recycler with the new list of items
+        notifyItemRangeChanged(0,items.size()); //refresh the recycler with the new list of items
     }
 
     //inner class is used to make a copy of the XML tags from the order_list_item.XML page used to make multiple copies.
@@ -51,33 +50,32 @@ public class OrderListRecAdapter extends RecyclerView.Adapter<OrderListRecAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         //declare tags in order_list_item.xml
-        private TextView itemName;
-        private EditText edtOnhand;
+        private final TextView itemName;
+        private final EditText edtOnHand;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             //declare xml tags
             itemName = itemView.findViewById(R.id.txtItemName);
-            edtOnhand = itemView.findViewById(R.id.edtOnhand);
+            edtOnHand = itemView.findViewById(R.id.edtOnhand);
 
-            //when a value changes in the edittext tag, assign the value to the onhand
+            //when a value changes in the edittext tag, assign the value to the on hand
             //for each item changed
-            edtOnhand.addTextChangedListener(new TextWatcher() {
+            edtOnHand.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 }
 
-                @Override //Todo: check that all the error checking is done with try catch
-                //Todo: add a changeable max value
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { TODO: //Allow user to set max order size
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                     try{
-                        Double newOnHand = Double.parseDouble(edtOnhand.getText().toString().trim());
+                        Double newOnHand = Double.parseDouble(edtOnHand.getText().toString().trim());
                         items.get(getBindingAdapterPosition()).setOnHand(newOnHand);
                     } catch(NumberFormatException ex){
-                        if(!(edtOnhand.getText().toString().equals("."))){
-                            edtOnhand.getText().clear();
+                        if(!(edtOnHand.getText().toString().equals("."))){
+                            edtOnHand.getText().clear();
                         }
                         items.get(getBindingAdapterPosition()).setOnHand(0d);
                     }

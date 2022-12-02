@@ -7,13 +7,13 @@
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="Item in order-------------------------------------"
+              android:text="@string/itemPlaceHolder"
               android:id="@+id/txtItemNameResult"
               android:maxLength="25"
               android:textSize="18sp"
               android:textStyle="bold"
               android:layout_marginStart="20dp"
-              android:layout_alignParentLeft="true">
+              android:layout_alignParentStart="true">
     </TextView>
 
     <TextView android:layout_width="wrap_content"
@@ -23,6 +23,6 @@
               android:textStyle="bold"
               android:maxLength="5"
               android:layout_marginEnd="30dp"
-              android:layout_alignParentRight="true"/>
+              android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

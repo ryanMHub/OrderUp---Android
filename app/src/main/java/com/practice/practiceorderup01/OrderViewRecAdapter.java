@@ -1,5 +1,6 @@
 package com.practice.practiceorderup01;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +22,14 @@ public class OrderViewRecAdapter extends RecyclerView.Adapter<OrderViewRecAdapte
     @Override
     public OrderViewRecAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_list_results, parent, false);
-        OrderViewRecAdapter.ViewHolder holder = new OrderViewRecAdapter.ViewHolder(view); //Create the inner object with the view that was created above
-        return holder; //return holder
+        return new ViewHolder(view); //return holder
     }
 
+    @SuppressLint("DefaultLocale")
     @Override //bind the item name to the text box and the order results to the text box
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         holder.txtItemName.setText(items.get(position).getItemName());
-        //Todo: stop negative results from showing
-        holder.txtResults.setText(Double.toString(items.get(position).getPar()));
+        holder.txtResults.setText(String.format("%.1f",items.get(position).getPar()));
     }
 
     //return the size of the array
@@ -41,15 +41,15 @@ public class OrderViewRecAdapter extends RecyclerView.Adapter<OrderViewRecAdapte
     //adds new list to the adapter
     public void setItemsList(ArrayList<Item> items){
         this.items = items;
-        notifyDataSetChanged(); //recycle the view windows
+        notifyItemRangeChanged(0,items.size()); //recycle the view windows
     }
 
     //inner class is used to make a copy of the XML tags from the order_list_results.XML page used to make multiple copies.
     //Based on the size of items arraylist
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView txtItemName;
-        private TextView txtResults;
+        private final TextView txtItemName;
+        private final TextView txtResults;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);

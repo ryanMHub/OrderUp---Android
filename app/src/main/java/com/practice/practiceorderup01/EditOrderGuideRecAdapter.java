@@ -24,20 +24,14 @@ public class EditOrderGuideRecAdapter extends RecyclerView.Adapter<EditOrderGuid
     //this method will inflate the edit_list_rec for each item in the list into the recycler
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.edit_list_rec, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
-    //link the values of the list by position in the list to each viewholder created for each item
+    //link the values of the list by position in the list to each viewHolder created for each item
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
 
-        holder.btnDeleteItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteItem(holder.getBindingAdapterPosition());
-            }
-        });
+        holder.btnDeleteItem.setOnClickListener(view -> deleteItem(holder.getBindingAdapterPosition()));
 
         if(editItemList.get(position).getItemName().equals("Item Name") || editItemList.get(position).getItemName().trim().isEmpty()){
             holder.edtItemNameEdit.setText("");
@@ -75,9 +69,9 @@ public class EditOrderGuideRecAdapter extends RecyclerView.Adapter<EditOrderGuid
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         //declares all tags in edit_list_rec.xml
-        private Button btnDeleteItem;
-        private EditText edtItemNameEdit;
-        private EditText edtItemParEdit;
+        private final Button btnDeleteItem;
+        private final EditText edtItemNameEdit;
+        private final EditText edtItemParEdit;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);

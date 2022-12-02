@@ -93,7 +93,7 @@ public class IconList {
         //ArrayList that will be returned
         List<Icons> returnList = new ArrayList<>();
 
-        //loop thru menuItems converting the index of image in an image
+        //loop through menuItems converting the index of image in an image
         // reference and adding the table name and image to the returnList
         for(MenuItemList item : menuItems){
             returnList.add(new Icons(item.getTableName(),iconsList.get(item.getIconID()).getImage()));
